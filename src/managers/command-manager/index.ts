@@ -1,47 +1,47 @@
 import * as fs from "fs";
-import MessageHandler from "./interfaces/message-handler";
+import { CommandHandlerInterface } from "./interfaces/CommandHandlerInterface";
 import * as Discord from "discord.js";
-import MiscHelper from "../../helpers/misc-helper";
+import MiscHelper from "../../helpers/MiscHelper";
 import { COMMAND_PREFIX, ENABLE_UNKOWN_COMMAND_MESSAGE } from "../../constants";
 
-export default class MessageHandlerManager {
+export class CommandManager {
   private static readonly HANDLERS_FOLDER_NAME = "handlers";
   private static readonly HELP_COMMAND = "help";
 
-  private messageHandlers: MessageHandler[];
+  private commandHandlers: CommandHandlerInterface[];
 
   public constructor(private client: Discord.Client) {
-    this.registerMessageHandlers();
+    this.registerCommandHandlers();
   }
 
-  private registerMessageHandlers() {
-    this.messageHandlers = fs
-      .readdirSync(`${__dirname}/${MessageHandlerManager.HANDLERS_FOLDER_NAME}`)
+  private registerCommandHandlers() {
+    this.commandHandlers = fs
+      .readdirSync(`${__dirname}/${CommandManager.HANDLERS_FOLDER_NAME}`)
       .filter((filename) => filename.endsWith(".ts"))
       .map(
         (filename) =>
-          `${__dirname}/${MessageHandlerManager.HANDLERS_FOLDER_NAME}/${filename}`
+          `${__dirname}/${CommandManager.HANDLERS_FOLDER_NAME}/${filename}`
       )
       .map((filename) => new (require(filename).default)());
 
-    if (this.messageHandlers.some((i) => i.aliases.length === 0)) {
+    if (this.commandHandlers.some((i) => i.aliases.length === 0)) {
       throw new Error(`There is a message handler with no aliases in it`);
     }
 
-    this.messageHandlers.forEach((messageHandler) =>
+    this.commandHandlers.forEach((commandHandler) =>
       console.info(
         "Loaded '" +
-          messageHandler.aliases.join(", ") +
+          commandHandler.aliases.join(", ") +
           "' argument(s) listener"
       )
     );
 
     this.client.on("message", async (message: Discord.Message) =>
-      this.messageArrived(message)
+      this.commandArrived(message)
     );
   }
 
-  private async messageArrived(message: Discord.Message) {
+  private async commandArrived(message: Discord.Message) {
     if (message.author.bot) return;
 
     if (message.type !== "DEFAULT") return;
@@ -72,24 +72,22 @@ export default class MessageHandlerManager {
     command: string,
     args: string[]
   ) {
-    if (command === MessageHandlerManager.HELP_COMMAND) {
-      await this.helpMessageArrived(message);
-
+    if (command === CommandManager.HELP_COMMAND) {
+      await this.helpCommandArrived(message);
       return;
     }
 
-    const messageHandler = this.messageHandlers.find(
+    const commandHandler = this.commandHandlers.find(
       (i) => i.aliases.indexOf(command) !== -1
     );
 
-    if (!messageHandler) {
-      await MessageHandlerManager.unknownMessageArrived(message);
-
+    if (!commandHandler) {
+      await CommandManager.unknownCommandArrived(message);
       return;
     }
 
     try {
-      await messageHandler.execute(message, args);
+      await commandHandler.execute(message, args);
     } catch (error) {
       console.log(error);
 
@@ -100,23 +98,23 @@ export default class MessageHandlerManager {
     }
   }
 
-  private async helpMessageArrived(message: Discord.Message) {
+  private async helpCommandArrived(message: Discord.Message) {
     const reply = new Discord.MessageEmbed();
 
     reply.setTitle("Available commands");
 
-    for (let messageHandler of this.messageHandlers) {
-      const aliasesJoined = messageHandler.aliases
+    for (let commandHandler of this.commandHandlers) {
+      const aliasesJoined = commandHandler.aliases
         .map((i) => `${COMMAND_PREFIX}${i}`)
         .join(", ");
 
-      reply.addField("**" + aliasesJoined + "**", messageHandler.description);
+      reply.addField("**" + aliasesJoined + "**", commandHandler.description);
     }
 
     await message.reply(reply);
   }
 
-  private static async unknownMessageArrived(message: Discord.Message) {
+  private static async unknownCommandArrived(message: Discord.Message) {
     if (!ENABLE_UNKOWN_COMMAND_MESSAGE) return;
 
     await message.reply(
