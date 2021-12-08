@@ -1,0 +1,26 @@
+{
+  "name": "builderbaut",
+  "version": "1.0.0",
+  "description": "The official discord bot for the buildergroop community.",
+  "main": "dist/index.js",
+  "private": "false",
+  "scripts": {
+    "build": "tsc",
+    "watch": "ts-node-dev --respawn src/index.ts",
+    "start": "ts-node src/index.ts"
+  },
+  "author": "Aaryaman Maheshwari",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "axios": "^0.19.2",
+    "discord.js": "^12.2.0",
+    "dotenv": "^10.0.0"
+  },
+  "devDependencies": {
+    "@types/axios": "^0.14.0",
+    "@types/node": "^13.13.5",
+    "ts-node": "^8.10.1",
+    "ts-node-dev": "^1.0.0-pre.44",
+    "typescript": "^3.8.3"
+  }
+}
