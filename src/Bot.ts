@@ -4,7 +4,6 @@ import * as dotenv from "dotenv";
 import { PresenceData } from "discord.js";
 
 import { CommandManager } from "./managers/command-manager";
-import { IntroductionManager } from "./managers/introduction-manager";
 
 export class Bot {
   private static client: DJS.Client;
@@ -20,7 +19,6 @@ export class Bot {
   // load the modules for the bot
   private static async loadManagers() {
     new CommandManager(Bot.client);
-    new IntroductionManager(Bot.client);
   }
 
   // set the bot presence
