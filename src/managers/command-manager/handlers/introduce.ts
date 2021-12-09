@@ -10,16 +10,24 @@ export default class IntroduceCommandHandler
     "Introduce yourself to the community and obtain the 'Eligible' role, which would allow you to access cool perks and events.";
 
   async execute(message: Discord.Message, args: string[]): Promise<void> {
-    this.verifyCommand(message);
+    if (!(await this.verifyCommand(message))) return;
     this.getIntroData(message);
   }
 
-  private verifyCommand(message: Discord.Message) {
-    this.validateChannel(message);
+  private async verifyCommand(message: Discord.Message) {
+    if (!(await this.validateChannel(message))) return false;
   }
 
   /** DM the user and collect their introduction data */
   private getIntroData(message: Discord.Message) {
+    message.author.send("", {
+      embed: {
+        color: "#010101",
+        title: "Welcome to buildergroop!",
+        description:
+          "It's lovely to have you! Please answer the questions here.",
+      },
+    });
     // assign role to the message author
     // message.member.roles.add("913766127451136002");
   }
@@ -39,6 +47,7 @@ export default class IntroduceCommandHandler
       errorMessage.delete({ timeout: 5000 });
 
       await message.delete({ timeout: 5000 });
+      return false;
     }
   }
 
@@ -49,9 +58,10 @@ export default class IntroduceCommandHandler
         `Please use this command in the <#${INTRODUCTIONS_CHANNEL_ID}> channel`
       );
 
-      errorMessage.delete({ timeout: 5000 });
+      await errorMessage.delete({ timeout: 3000 });
 
-      await message.delete({ timeout: 5000 });
+      await message.delete({ timeout: 3000 });
+      return false;
     }
   }
 }
