@@ -27,7 +27,7 @@ export default class IntroduceCommandHandler
     await this.getIntroData(message);
   }
 
-  /** start conversation with user */
+  /** Start conversation with user */
   private async startConvo(message: Discord.Message) {
     // send initial message
     await message.author.send({
@@ -52,7 +52,7 @@ export default class IntroduceCommandHandler
 
     let isExited = false;
     let reminderCount = 0;
-    let success = true;
+    let success = false;
 
     while (!isExited) {
       const collected = await convo.awaitMessages(
@@ -60,21 +60,24 @@ export default class IntroduceCommandHandler
         { max: 1, idle: 120000 }
       );
 
-      // prompt the user to start if they dont send anything in 120 seconds
-      reminderCount++;
-      if (reminderCount >= 5) {
+      // check to see if the user has started the convo
+      if (collected?.first()?.content === "start") {
         isExited = true;
-        success = false;
-        await convo.send("Canceling introduction due to inactivity.");
+        success = true;
+        reminderCount = 0;
       }
 
-      if (success && !isExited) {
-        await convo.send("Please type 'start' to start answering");
-
-        if (collected?.first()?.content === "start") {
-          isExited = false;
-          reminderCount = 0;
+      if (!isExited) {
+        // cancel the conversation if the user doesn't respond
+        if (reminderCount >= 5) {
+          isExited = true;
+          success = false;
+          await convo.send("Canceling introduction due to inactivity.");
         }
+
+        // prompt the user to start if they dont send anything in 120 seconds
+        reminderCount++;
+        await convo.send("Please type 'start' to start answering");
       }
     }
 
@@ -87,16 +90,19 @@ export default class IntroduceCommandHandler
     const convo = message.author.dmChannel;
 
     // ask for users name
-    const questionResponse = await this.askUserQuestion(
+    const usersName = await this.askUserQuestion(
       convo,
       message,
-      `
-**What is your name?**
-If you'd prefer not to disclose your real identity, feel free to use an alias
-        `
+      new Discord.MessageEmbed({
+        title: "What is your name?",
+        description:
+          "If you'd prefer not to disclose your real identity, feel free to use an alias",
+        color: "#ffffff",
+      })
     );
 
-    console.log(questionResponse);
+    console.log(usersName);
+    this.data.name = usersName;
 
     // assign role to the message author
     // message.member.roles.add("913766127451136002");
@@ -105,7 +111,7 @@ If you'd prefer not to disclose your real identity, feel free to use an alias
   private async askUserQuestion(
     convo: Discord.DMChannel,
     message: Discord.Message,
-    question: string
+    question: string | Discord.MessageEmbed
   ) {
     // send the question
     await convo.recipient.send(question);
@@ -115,12 +121,9 @@ If you'd prefer not to disclose your real identity, feel free to use an alias
       (m) => m.author.id === message.author.id,
       { max: 1 }
     );
-    console.log(collected);
-
-    console.log("size thingy" + collected[collected.size - 1]);
 
     // return the response
-    return collected;
+    return collected.first().content;
   }
 
   /** Form the intro and send it as an embed in the intros channel */
