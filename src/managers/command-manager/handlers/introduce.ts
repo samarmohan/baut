@@ -8,10 +8,8 @@ export default class IntroduceCommandHandler
   private data: {
     name?: string;
     location?: string;
-    tools?: string;
-    interests?: string;
-    projects?: string;
-    extraRemarks?: string;
+    oneProject?: string;
+    description?: string;
   } = {};
 
   aliases: string[] = ["introduce", "introduction", "intro"];
@@ -100,9 +98,48 @@ export default class IntroduceCommandHandler
         color: "#ffffff",
       })
     );
-
-    console.log(usersName);
     this.data.name = usersName;
+
+    // ask for users location
+    const usersLocation = await this.askUserQuestion(
+      convo,
+      message,
+      new Discord.MessageEmbed({
+        title: `Hey ${this.data.name}! Where are you from?`,
+        description: "What is your location?",
+        color: "#ffffff",
+      })
+    );
+    this.data.location = usersLocation;
+
+    // ask for one project the user is building
+    const usersOneProject = await this.askUserQuestion(
+      convo,
+      message,
+      new Discord.MessageEmbed({
+        title: `Looking good! Now, name one thing you're working on.`,
+        description:
+          "What is the most significant thing you are working on right now? We use this to assign you a nickname.",
+        footer: {
+          text: " If there's nothing, type 'skip'.",
+        },
+        color: "#ffffff",
+      })
+    );
+    if (usersOneProject != "skip") this.data.oneProject = usersOneProject;
+
+    // ask for users description
+    const usersDescription = await this.askUserQuestion(
+      convo,
+      message,
+      new Discord.MessageEmbed({
+        title: `Cool! Now, tell me a little more about yourself.`,
+        description:
+          "Write yourself a short description covering your interests, endeavors, and anything else you'd like to share.",
+        color: "#ffffff",
+      })
+    );
+    this.data.description = usersDescription;
 
     // assign role to the message author
     // message.member.roles.add("913766127451136002");
