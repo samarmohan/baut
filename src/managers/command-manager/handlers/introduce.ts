@@ -23,6 +23,7 @@ export default class IntroduceCommandHandler
     // execute
     if (!(await this.startConvo(message))) return;
     await this.getIntroData(message);
+    await this.sendIntroEmbed(message);
     await this.endConvo(message);
   }
 
@@ -146,21 +147,43 @@ export default class IntroduceCommandHandler
     // message.member.roles.add("913766127451136002");
   }
 
+  /** Form the intro and send it as an embed in the intros channel */
+  private async sendIntroEmbed(message: Discord.Message) {
+    const introEmbed = new Discord.MessageEmbed({
+      title: `${message.author.username}'s introduction`,
+      description: `
+        **Name:** ${this.data.name}
+
+        **Location:** ${this.data.location}
+
+        **Working On:** ${this.data.oneProject}
+
+        **About ${message.author.username}:** 
+        ${this.data.description}
+      `,
+      color: "#4D4AFA",
+      footer: {
+        text: "Do you want to post an introduction? Type !introduce to start.",
+      },
+    });
+
+    await message.channel.send(introEmbed);
+  }
+
   private async endConvo(message: Discord.Message) {
     // give the user the role
     message.member.roles.add("913766127451136002");
 
     // generate the users nickname
-    message.member.setNickname(
-      `${
-        this.data.oneProject
-          ? this.data.name.substring(0, 15)
-          : this.data.name.substring(0, 33)
-      } ${
-        this.data.oneProject &&
-        `- ${this.data.oneProject.substring(0, 16) || ""}`
-      }`
-    );
+    const nickname = `${
+      this.data.oneProject
+        ? this.data.name.substring(0, 15)
+        : this.data.name.substring(0, 33)
+    } ${
+      this.data.oneProject && `- ${this.data.oneProject.substring(0, 16) || ""}`
+    }`;
+    console.log(nickname);
+    message.member.setNickname(nickname);
 
     // send the end message
     await message.author.send({
@@ -193,9 +216,6 @@ export default class IntroduceCommandHandler
     // return the response
     return collected.first().content;
   }
-
-  /** Form the intro and send it as an embed in the intros channel */
-  private sendIntroEmbed(message: Discord.Message) {}
 
   /** Validate the channel the intro command was used in */
   private async validateChannel(message: Discord.Message) {
