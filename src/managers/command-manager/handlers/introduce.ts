@@ -23,6 +23,7 @@ export default class IntroduceCommandHandler
     // execute
     if (!(await this.startConvo(message))) return;
     await this.getIntroData(message);
+    await this.endConvo(message);
   }
 
   /** Start conversation with user */
@@ -135,7 +136,7 @@ export default class IntroduceCommandHandler
       new Discord.MessageEmbed({
         title: `Cool! Now, tell me a little more about yourself.`,
         description:
-          "Write yourself a short description covering your interests, endeavors, and anything else you'd like to share.",
+          "Write a short description covering your interests, endeavors, and anything else you'd like to share.",
         color: "#ffffff",
       })
     );
@@ -143,6 +144,36 @@ export default class IntroduceCommandHandler
 
     // assign role to the message author
     // message.member.roles.add("913766127451136002");
+  }
+
+  private async endConvo(message: Discord.Message) {
+    // give the user the role
+    message.member.roles.add("913766127451136002");
+
+    // generate the users nickname
+    message.member.setNickname(
+      `${
+        this.data.oneProject
+          ? this.data.name.substring(0, 15)
+          : this.data.name.substring(0, 33)
+      } ${
+        this.data.oneProject &&
+        `- ${this.data.oneProject.substring(0, 16) || ""}`
+      }`
+    );
+
+    // send the end message
+    await message.author.send({
+      embed: {
+        color: "#4D4AFA",
+        title: "Thanks!",
+        description:
+          "You're now eligible for events and perks! I've posted your intro in the introductions channel so others can check it out.",
+        footer: {
+          text: "Have fun!",
+        },
+      },
+    });
   }
 
   private async askUserQuestion(
@@ -164,23 +195,7 @@ export default class IntroduceCommandHandler
   }
 
   /** Form the intro and send it as an embed in the intros channel */
-  private sendIntroEmbed(message: Discord.Message) {
-    // assign role to the message author
-    // message.member.roles.add("913766127451136002");
-  }
-
-  /** Check if the message is big enough */
-  private async validateLength(message: Discord.Message) {
-    if (message.content.length < 70) {
-      const successMessage = await message.channel.send(
-        "Your introduction is too short. Please make sure it is over 70 characters. Deleting your message in 5 seconds."
-      );
-      successMessage.delete({ timeout: 5000 });
-
-      await message.delete({ timeout: 5000 });
-      return false;
-    }
-  }
+  private sendIntroEmbed(message: Discord.Message) {}
 
   /** Validate the channel the intro command was used in */
   private async validateChannel(message: Discord.Message) {
