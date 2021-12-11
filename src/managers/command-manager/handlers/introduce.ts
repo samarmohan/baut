@@ -19,6 +19,14 @@ export default class IntroduceCommandHandler
     // command verification functions
     if (!(await this.validateChannel(message))) return;
 
+    // prompt user in channel
+    (
+      await message.channel.send(
+        `Hey ${message.author.username}, Check your DM's!`
+      )
+    ).delete({ timeout: 2000 });
+    await message.delete({ timeout: 2000 });
+
     // execute
     if (!(await this.startConvo(message))) return;
     await this.getIntroData(message);
