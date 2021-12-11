@@ -7,7 +7,6 @@ export default class IntroduceCommandHandler
 {
   private data: {
     name?: string;
-    location?: string;
     oneProject?: string;
     description?: string;
   } = {};
@@ -102,18 +101,6 @@ export default class IntroduceCommandHandler
     );
     this.data.name = usersName;
 
-    // ask for users location
-    const usersLocation = await this.askUserQuestion(
-      convo,
-      message,
-      new Discord.MessageEmbed({
-        title: `Hey ${this.data.name}! Where are you from?`,
-        description: "What is your location?",
-        color: "#ffffff",
-      })
-    );
-    this.data.location = usersLocation;
-
     // ask for one project the user is building
     const usersOneProject = await this.askUserQuestion(
       convo,
@@ -128,7 +115,9 @@ export default class IntroduceCommandHandler
         color: "#ffffff",
       })
     );
-    if (usersOneProject != "skip") this.data.oneProject = usersOneProject;
+    usersOneProject === "skip"
+      ? (this.data.oneProject = "")
+      : (this.data.oneProject = usersOneProject);
 
     // ask for users description
     const usersDescription = await this.askUserQuestion(
@@ -142,9 +131,6 @@ export default class IntroduceCommandHandler
       })
     );
     this.data.description = usersDescription;
-
-    // assign role to the message author
-    // message.member.roles.add("913766127451136002");
   }
 
   /** Form the intro and send it as an embed in the intros channel */
@@ -154,8 +140,6 @@ export default class IntroduceCommandHandler
       description: `
         **Name:** ${this.data.name}
 
-        **Location:** ${this.data.location}
-
         **Working On:** ${this.data.oneProject}
 
         **About ${message.author.username}:** 
@@ -163,7 +147,7 @@ export default class IntroduceCommandHandler
       `,
       color: "#4D4AFA",
       footer: {
-        text: "Do you want to post an introduction? Type !introduce to start.",
+        text: "Do you want to post an introduction? Type ?introduce to start.",
       },
     });
 
@@ -179,9 +163,8 @@ export default class IntroduceCommandHandler
       this.data.oneProject
         ? this.data.name.substring(0, 15)
         : this.data.name.substring(0, 33)
-    } ${
-      this.data.oneProject && `- ${this.data.oneProject.substring(0, 16) || ""}`
-    }`;
+    } ${this.data.oneProject && `- ${this.data.oneProject.substring(0, 16)}`}`;
+
     console.log(nickname);
     message.member.setNickname(nickname);
 
@@ -191,7 +174,7 @@ export default class IntroduceCommandHandler
         color: "#4D4AFA",
         title: "Thanks!",
         description:
-          "You're now eligible for events and perks! I've posted your intro in the introductions channel so others can check it out.",
+          "You're now eligible for events and perks! I've posted your intro in the introductions channel so others can check it out. If you haven't already, make sure to get yourself some roles in the roles channel!",
         footer: {
           text: "Have fun!",
         },
