@@ -18,11 +18,12 @@ export default class IntroduceCommandHandler
   async execute(message: Discord.Message, args: string[]): Promise<void> {
     // command verification functions
     if (!(await this.validateChannel(message))) return;
+    if (!(await this.validateDuplicateIntro(message))) return;
 
     // prompt user in channel
     (
       await message.channel.send(
-        `Hey ${message.author.username}, Check your DM's!`
+        `Hey <@${message.author.id}>, Check your DM's!`
       )
     ).delete({ timeout: 2000 });
     await message.delete({ timeout: 2000 });
@@ -188,6 +189,8 @@ export default class IntroduceCommandHandler
         },
       },
     });
+
+    await message.author.send("INTRO_COMPLETE");
   }
 
   private async askUserQuestion(
@@ -211,15 +214,39 @@ export default class IntroduceCommandHandler
   /** Validate the channel the intro command was used in */
   private async validateChannel(message: Discord.Message) {
     if (message.channel.id !== INTRODUCTIONS_CHANNEL_ID) {
-      const successMessage = await message.channel.send(
-        `Please use this command in the <#${INTRODUCTIONS_CHANNEL_ID}> channel`
+      const errorMessage = await message.channel.send(
+        `<@${message.author.id}> Please use this command in the <#${INTRODUCTIONS_CHANNEL_ID}> channel`
       );
 
-      await successMessage.delete({ timeout: 3000 });
+      await errorMessage.delete({ timeout: 3000 });
 
       await message.delete({ timeout: 3000 });
 
       console.log("intro command used in invalid channel");
+      return false;
+    }
+
+    return true;
+  }
+
+  /** Confirm that the user has not already introduced themselves */
+  private async validateDuplicateIntro(message: Discord.Message) {
+    const messages = message.author.dmChannel
+      ? await message.author.dmChannel.messages.fetch()
+      : await (await message.author.createDM()).messages.fetch();
+
+    const duplicate = messages.find(
+      (m) => m.content === "INTRO_COMPLETE" && m.author.id !== message.author.id
+    );
+
+    if (duplicate) {
+      await message.member.roles.add("913766127451136002");
+      (
+        await message.channel.send(
+          `<@${message.author.id}> You've already completed your introduction! You should have the 'Eligible' role.`
+        )
+      ).delete({ timeout: 4000 });
+      await message.delete({ timeout: 4000 });
       return false;
     }
 
