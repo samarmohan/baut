@@ -3,7 +3,6 @@ import * as dotenv from "dotenv";
 
 import { PresenceData } from "discord.js";
 
-import { CommandManager } from "./managers/command-manager";
 import { IntroductionManager } from "./managers/introduction-manager";
 
 export class Bot {
@@ -19,7 +18,6 @@ export class Bot {
 
   // load the modules for the bot
   private static async loadManagers() {
-    new CommandManager(Bot.client);
     new IntroductionManager(Bot.client);
   }
 
@@ -27,10 +25,12 @@ export class Bot {
   private static async setPresence() {
     const presence: PresenceData = {
       status: "online",
-      activity: {
-        type: "PLAYING",
-        name: "Buildergroop Support",
-      },
+      activities: [
+        {
+          type: "PLAYING",
+          name: "Buildergroop Support",
+        },
+      ],
     };
 
     await Bot.client.user?.setPresence(presence);
@@ -38,7 +38,16 @@ export class Bot {
 
   private static async createClient() {
     // set the client
-    Bot.client = new DJS.Client();
+    Bot.client = new DJS.Client({
+      intents: [
+        "GUILDS",
+        "GUILD_MESSAGES",
+        "GUILD_MESSAGE_REACTIONS",
+        "DIRECT_MESSAGES",
+        "DIRECT_MESSAGE_REACTIONS",
+      ],
+      partials: ["CHANNEL", "MESSAGE", "REACTION", "USER", "GUILD_MEMBER"],
+    });
 
     // when the client is created
     Bot.client.on("ready", async () => {
