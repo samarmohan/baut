@@ -1,0 +1,6 @@
+"use strict";
+exports.__esModule = true;
+exports.INTRODUCTIONS_CHANNEL_ID = exports.ENABLE_UNKOWN_COMMAND_MESSAGE = exports.COMMAND_PREFIX = void 0;
+exports.COMMAND_PREFIX = "?";
+exports.ENABLE_UNKOWN_COMMAND_MESSAGE = true;
+exports.INTRODUCTIONS_CHANNEL_ID = "913701412578418718";

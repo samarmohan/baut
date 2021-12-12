@@ -17,6 +17,6 @@ export default class HelloCommandHandler implements CommandHandlerInterface {
       HelloCommandHandler.HELLO_MESSAGES
     );
 
-    await message.reply(helloMessage);
+    await message.reply(helloMessage || "Hello");
   }
 }

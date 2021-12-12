@@ -33,7 +33,7 @@ export class Bot {
       },
     };
 
-    await Bot.client.user.setPresence(presence);
+    await Bot.client.user?.setPresence(presence);
   }
 
   private static async createClient() {
@@ -47,6 +47,6 @@ export class Bot {
     });
 
     // activate the client
-    await Bot.client.login(process.env.TOKEN);
+    await Bot.client.login(process.env.TOKEN || "");
   }
 }

@@ -5,7 +5,7 @@ export class IntroductionManager {
   public constructor(private client: Discord.Client) {
     this.client.on("message", async (message: Discord.Message) => {
       if (message.channel.id === INTRODUCTIONS_CHANNEL_ID) {
-        await message.member.roles.add("913766127451136002");
+        await message.member?.roles.add("913766127451136002");
       }
     });
   }
