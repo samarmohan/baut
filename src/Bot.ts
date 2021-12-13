@@ -88,7 +88,203 @@ export class Bot {
         }
       }
 
+      async function rolesEmbeds() {
+        if (
+          message.content === `${COMMAND_PREFIX}roles` &&
+          message.member.permissions.has(["ADMINISTRATOR"])
+        ) {
+          const whoAreYouRow = new Discord.MessageActionRow().addComponents(
+            new Discord.MessageButton()
+              .setCustomId("developer")
+              .setLabel("Developer")
+              .setStyle("SECONDARY"),
+            new Discord.MessageButton()
+              .setCustomId("designer")
+              .setLabel("Designer")
+              .setStyle("SECONDARY"),
+            new Discord.MessageButton()
+              .setCustomId("entrepreneur")
+              .setLabel("Entrepreneur")
+              .setStyle("SECONDARY"),
+            new Discord.MessageButton()
+              .setCustomId("creator")
+              .setLabel("Creator")
+              .setStyle("SECONDARY")
+          );
+
+          const locationRow1 = new Discord.MessageActionRow().addComponents(
+            new Discord.MessageButton()
+              .setCustomId("North America")
+              .setLabel("North America")
+              .setStyle("SECONDARY"),
+            new Discord.MessageButton()
+              .setCustomId("South America")
+              .setLabel("South America")
+              .setStyle("SECONDARY"),
+            new Discord.MessageButton()
+              .setCustomId("Europe")
+              .setLabel("Europe")
+              .setStyle("SECONDARY"),
+            new Discord.MessageButton()
+              .setCustomId("Oceania")
+              .setLabel("Oceania")
+              .setStyle("SECONDARY"),
+            new Discord.MessageButton()
+              .setCustomId("Asia")
+              .setLabel("Asia")
+              .setStyle("SECONDARY")
+          );
+
+          const locationRow2 = new Discord.MessageActionRow().addComponents(
+            new Discord.MessageButton()
+              .setCustomId("Africa")
+              .setLabel("Africa")
+              .setStyle("SECONDARY"),
+            new Discord.MessageButton()
+              .setCustomId("Antartica")
+              .setLabel("Antartica")
+              .setStyle("SECONDARY")
+          );
+
+          const pronounsRow = new Discord.MessageActionRow().addComponents(
+            new Discord.MessageButton()
+              .setCustomId("He/Him")
+              .setLabel("He/Him")
+              .setStyle("SECONDARY"),
+            new Discord.MessageButton()
+              .setCustomId("She/Her")
+              .setLabel("She/Her")
+              .setStyle("SECONDARY"),
+            new Discord.MessageButton()
+              .setCustomId("They/Them")
+              .setLabel("They/Them")
+              .setStyle("SECONDARY")
+          );
+
+          const experienceRow = new Discord.MessageActionRow().addComponents(
+            new Discord.MessageButton()
+              .setCustomId("1-2yrs")
+              .setLabel("1 - 2 Years")
+              .setStyle("SECONDARY"),
+            new Discord.MessageButton()
+              .setCustomId("3-5yrs")
+              .setLabel("3 - 5 Years")
+              .setStyle("SECONDARY"),
+            new Discord.MessageButton()
+              .setCustomId("6-8yrs")
+              .setLabel("6 - 8 Years")
+              .setStyle("SECONDARY"),
+            new Discord.MessageButton()
+              .setCustomId("9+yrs")
+              .setLabel("9+ Years")
+              .setStyle("SECONDARY")
+          );
+
+          const pingsRow = new Discord.MessageActionRow().addComponents(
+            new Discord.MessageButton()
+              .setCustomId("Server Inactivity Ping")
+              .setLabel("Server Inactivity Ping")
+              .setStyle("SECONDARY"),
+            new Discord.MessageButton()
+              .setCustomId("Assistance Ping")
+              .setLabel("Assistance Ping")
+              .setStyle("SECONDARY"),
+            new Discord.MessageButton()
+              .setCustomId("Poll Ping")
+              .setLabel("Poll Ping")
+              .setStyle("SECONDARY"),
+            new Discord.MessageButton()
+              .setCustomId("Announcement Ping")
+              .setLabel("Announcement Ping")
+              .setStyle("SECONDARY")
+          );
+
+          await message.channel.send(
+            "https://media.discordapp.net/attachments/913709531442315324/916712730713534494/Roles_Poster.png"
+          );
+          await message.channel.send(`
+__
+__
+          `);
+
+          await message.channel.send({
+            embeds: [
+              {
+                color: "#535061",
+                title: "Who Are You?",
+                description: "Choose what best defines your career.",
+              },
+            ],
+            components: [whoAreYouRow],
+          });
+          await message.channel.send(`
+__
+__
+          `);
+
+          await message.channel.send({
+            embeds: [
+              {
+                color: "#535061",
+                title: "Where are you located?",
+                description: "Choose what continent you live in.",
+              },
+            ],
+            components: [locationRow1, locationRow2],
+          });
+          await message.channel.send(`
+__
+__
+          `);
+
+          await message.channel.send({
+            embeds: [
+              {
+                color: "#535061",
+                title: "What are your pronouns?",
+                description:
+                  "Select your pronouns (Skip if you'd rather not disclose).",
+              },
+            ],
+            components: [pronounsRow],
+          });
+          await message.channel.send(`
+__
+__
+          `);
+
+          await message.channel.send({
+            embeds: [
+              {
+                color: "#535061",
+                title: "Choose your experience level",
+                description:
+                  "How much experience do you have in your current career(s)/hobby(s) (i.e Developer, Designer, Entrepreneur, Creator)?",
+              },
+            ],
+            components: [experienceRow],
+          });
+          await message.channel.send(`
+__
+__
+          `);
+
+          await message.channel.send({
+            embeds: [
+              {
+                color: "#535061",
+                title: "Select Ping Roles",
+                description:
+                  "Choose which of the following you would like to be pinged for",
+              },
+            ],
+            components: [pingsRow],
+          });
+        }
+      }
+
       rulesEmbeds();
+      rolesEmbeds();
 
       // handlers
       async function handleIntroduction() {
