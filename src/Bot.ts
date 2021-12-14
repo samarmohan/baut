@@ -78,11 +78,13 @@ export class Bot {
               color: "#535061",
               title: "What to do after joining",
               description: `
-      Firstly, We highly recommend choosing some awesome roles over in <#913709531442315324>.
-      
-      Next, you should go ahead and introduce yourself over in <#${INTRODUCTIONS_CHANNEL_ID}>. By introducing yourself, you get access to exclusive buildergroop events and perks!
+- Change your nickname to the format: \`[name] - [what you're working on]\`
 
-      Go to <#${ABOUT_CHANNEL_ID}> to learn more about the server.
+- Choose some awesome roles over in <#913709531442315324>.
+
+- Introduce yourself over in <#${INTRODUCTIONS_CHANNEL_ID}>.
+
+- Go to <#${ABOUT_CHANNEL_ID}> to learn more about the server.
                     `,
             },
           ],
@@ -558,6 +560,47 @@ Finally, it signifies our community is quite chill due to our very casual name.
               color: "#0099ff",
               title:
                 "Welcome to buildergroop - A community full of ambitious young builders, striving to make the world a better place through innovation.",
+            },
+          ],
+        });
+      }
+
+      if (
+        message.content === `${COMMAND_PREFIX}intro_template` &&
+        message.member.permissions.has(["ADMINISTRATOR"])
+      ) {
+        message.delete();
+
+        await message.channel.send({
+          embeds: [
+            {
+              title: "Your Introduction",
+              description: `
+In order to maintain consistency and include all necessary aspects of an intro, we recommend covering the following:
+
+**Basics**
+Mention your name, where you're located, and anything else you might want to add
+
+**What you're working on**
+List whatever you're building or creating at the moment
+
+**What you use**
+Mention the tools or technologies you work with on a daily basis
+
+**Hobbies**
+What you like to do in your free time
+
+**Where people can find you**
+Link your social media accounts
+
+**Final Remarks**
+Conclude your introduction with any final statements you might like to add.
+
+
+`,
+              footer: {
+                text: "Feel free to make this as concise or elaborate as you want, while covering the necessary fields.",
+              },
             },
           ],
         });
