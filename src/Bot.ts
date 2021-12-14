@@ -24,7 +24,9 @@ export class Bot {
   // load the modules for the bot
   private static async loadModules() {
     this.client.on("message", async (message) => {
-      // embeds
+      /** EMBEDS */
+
+      // rules embed
       if (
         message.content === `${COMMAND_PREFIX}rules` &&
         message.member.permissions.has(["ADMINISTRATOR"])
@@ -87,6 +89,7 @@ export class Bot {
         });
       }
 
+      // roles embeds
       if (
         message.content === `${COMMAND_PREFIX}roles` &&
         message.member.permissions.has(["ADMINISTRATOR"])
@@ -407,7 +410,63 @@ __
         });
       }
 
-      // handlers
+      // about embeds
+      if (
+        message.content === `${COMMAND_PREFIX}about` &&
+        message.member.permissions.has(["ADMINISTRATOR"])
+      ) {
+        await message.channel.send(
+          "https://cdn.discordapp.com/attachments/913702607510466651/917787070850793522/About_Poster.png"
+        );
+        await message.channel.send({
+          embeds: [
+            {
+              color: "#535061",
+              title: "The Community",
+              description:
+                "We're all members of gen-z, trying to build things that make an impact, whether it's a volunteer organization, talent agency, or a platform for the future. Our community members encourage and assist one another in all of their endeavors; We collectively form a large and supportive family.",
+            },
+          ],
+        });
+        await message.channel.send({
+          embeds: [
+            {
+              color: "#535061",
+              title: "The Vibe",
+              description:
+                "We aspire to be a casual hangout space, as well as an encouraging hub for progress and dream chasing with plenty of networking opportunities.",
+            },
+          ],
+        });
+        await message.channel.send({
+          embeds: [
+            {
+              color: "#535061",
+              title: "The Name",
+              description: `
+Wtf is our name? It may look wonky, but it symbolizes a few notable things:
+
+Firstly, it incorporates the fact that we're all building things, collectively.
+
+The term also showcases that our community is specifically for young individuals due to the misspelling in the term "group".
+
+Finally, it signifies our community is quite chill due to our very casual name.
+`,
+            },
+          ],
+        });
+        await message.channel.send({
+          embeds: [
+            {
+              color: "#0099ff",
+              title:
+                "Welcome to buildergroop - A community full of ambitious young builders, striving to make the world a better place through innovation.",
+            },
+          ],
+        });
+      }
+
+      /** HANDLERS */
       async function handleIntroduction() {
         if (message.channelId === INTRODUCTIONS_CHANNEL_ID) {
           await message.member?.roles.add("913766127451136002");
