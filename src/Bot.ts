@@ -469,7 +469,8 @@ Finally, it signifies our community is quite chill due to our very casual name.
       /** HANDLERS */
       async function handleIntroduction() {
         if (message.channelId === INTRODUCTIONS_CHANNEL_ID) {
-          await message.member?.roles.add("913766127451136002");
+          await message.member?.roles.remove(roleIds.not_eligible);
+          await message.member?.roles.add(roleIds.eligible);
         }
       }
 

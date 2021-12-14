@@ -51,4 +51,7 @@ export const roleIds = {
   assistance_ping: "913789046092886037",
   poll_ping: "913789194395074601",
   announcement_ping: "913789232311599128",
+
+  eligible: "913766127451136002",
+  not_eligible: "920144177818390649",
 };
