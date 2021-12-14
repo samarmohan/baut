@@ -202,18 +202,52 @@ export class Bot {
 
         const addRole = async (
           roleId: string,
-          collected: Discord.ButtonInteraction<Discord.CacheType>
+          collected: Discord.ButtonInteraction<Discord.CacheType>,
+          type: "single_select" | "multi_select" = "multi_select",
+          roleIdArr: string[] = []
         ) => {
           const guild = await this.client.guilds.fetch(collected.guildId);
           const member = await guild.members.fetch(collected.user.id);
-          member.roles.add(roleId);
 
-          collected.reply({
-            ephemeral: true,
-            content: `Gave you the **${
-              (await guild.roles.fetch(roleId)).name
-            }** role.`,
-          });
+          const roleToAdd = member.guild.roles.cache.get(roleId);
+
+          if (type === "multi_select") {
+            member.roles.add(roleToAdd);
+
+            await collected.reply({
+              ephemeral: true,
+              content: `Gave you the **${roleToAdd.name}** role.`,
+            });
+          }
+
+          if (type === "single_select") {
+            const existingRole = member.roles.cache.find((role) =>
+              roleIdArr.includes(role.id)
+            );
+
+            if (existingRole) {
+              await member.roles.remove(existingRole);
+              await member.roles.add(roleToAdd);
+
+              if (existingRole.id === roleId) {
+                await collected.reply({
+                  ephemeral: true,
+                  content: `You already have that role!`,
+                });
+              } else {
+                await collected.reply({
+                  ephemeral: true,
+                  content: `Gave you the **${roleToAdd.name}** role.`,
+                });
+              }
+            } else {
+              await member.roles.add(roleToAdd);
+              await collected.reply({
+                ephemeral: true,
+                content: `Gave you the **${roleToAdd.name}** role.`,
+              });
+            }
+          }
         };
 
         const sendDivider = async () => {
@@ -233,6 +267,9 @@ __
               color: "#535061",
               title: "Who Are You?",
               description: "Choose what best defines your career.",
+              footer: {
+                text: "Multi Select",
+              },
             },
           ],
           components: [whoAreYouRow],
@@ -269,6 +306,9 @@ __
               color: "#535061",
               title: "Where are you located?",
               description: "Choose what continent you live in.",
+              footer: {
+                text: "Single Select",
+              },
             },
           ],
           components: [locationRow1, locationRow2],
@@ -279,26 +319,67 @@ __
           });
 
         locationCollector.on("collect", async (collected) => {
+          // a variabe containing the role ids for all the continents
+          const roleIdArr = [
+            roleIds.africa,
+            roleIds.antartica,
+            roleIds.asia,
+            roleIds.europe,
+            roleIds.north_america,
+            roleIds.oceania,
+            roleIds.south_america,
+          ];
+
           if (collected.customId === "North America") {
-            addRole(roleIds.north_america, collected);
+            await addRole(
+              roleIds.north_america,
+              collected,
+              "single_select",
+              roleIdArr
+            );
           }
           if (collected.customId === "South America") {
-            addRole(roleIds.south_america, collected);
+            await addRole(
+              roleIds.south_america,
+              collected,
+              "single_select",
+              roleIdArr
+            );
           }
           if (collected.customId === "Europe") {
-            addRole(roleIds.europe, collected);
+            await addRole(
+              roleIds.europe,
+              collected,
+              "single_select",
+              roleIdArr
+            );
           }
           if (collected.customId === "Oceania") {
-            addRole(roleIds.oceania, collected);
+            await addRole(
+              roleIds.oceania,
+              collected,
+              "single_select",
+              roleIdArr
+            );
           }
           if (collected.customId === "Asia") {
-            addRole(roleIds.asia, collected);
+            await addRole(roleIds.asia, collected, "single_select", roleIdArr);
           }
           if (collected.customId === "Antartica") {
-            addRole(roleIds.antartica, collected);
+            await addRole(
+              roleIds.antartica,
+              collected,
+              "single_select",
+              roleIdArr
+            );
           }
           if (collected.customId === "Africa") {
-            addRole(roleIds.africa, collected);
+            await addRole(
+              roleIds.africa,
+              collected,
+              "single_select",
+              roleIdArr
+            );
           }
         });
 
@@ -315,6 +396,9 @@ __
               title: "What are your pronouns?",
               description:
                 "Select your pronouns (Skip if you'd rather not disclose).",
+              footer: {
+                text: "Single/Multi Select",
+              },
             },
           ],
           components: [pronounsRow],
@@ -349,6 +433,9 @@ __
               title: "Choose your experience level",
               description:
                 "How much experience do you have in your current career(s)/hobby(s) (i.e Developer, Designer, Entrepreneur, Creator)?",
+              footer: {
+                text: "Single Select",
+              },
             },
           ],
           components: [experienceRow],
@@ -359,17 +446,24 @@ __
           });
 
         experienceCollector.on("collect", async (collected) => {
+          const roleIdArr = [
+            roleIds["exp1-2"],
+            roleIds["exp3-5"],
+            roleIds["exp6-8"],
+            roleIds["exp9+"],
+          ];
+
           if (collected.customId === "1-2yrs") {
-            addRole(roleIds["exp1-2"], collected);
+            addRole(roleIds["exp1-2"], collected, "single_select", roleIdArr);
           }
           if (collected.customId === "3-5yrs") {
-            addRole(roleIds["exp3-5"], collected);
+            addRole(roleIds["exp3-5"], collected, "single_select", roleIdArr);
           }
           if (collected.customId === "6-8yrs") {
-            addRole(roleIds["exp6-8"], collected);
+            addRole(roleIds["exp6-8"], collected, "single_select", roleIdArr);
           }
           if (collected.customId === "9+yrs") {
-            addRole(roleIds["exp9+"], collected);
+            addRole(roleIds["exp9+"], collected, "single_select", roleIdArr);
           }
         });
 
@@ -386,6 +480,9 @@ __
               title: "Select Ping Roles",
               description:
                 "Choose which of the following you would like to be pinged for",
+              footer: {
+                text: "Multi Select",
+              },
             },
           ],
           components: [pingsRow],
