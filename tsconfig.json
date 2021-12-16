@@ -1,6 +1,8 @@
 {
   "compilerOptions": {
-    "lib": ["ES2015"],
+    "lib": [
+      "ES2015"
+    ],
     "outDir": "dist",
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
@@ -16,10 +18,21 @@
     "baseUrl": ".",
     "skipLibCheck": true,
     "paths": {
-      "~/*": ["./src/*"]
+      "~/*": [
+        "./src/*"
+      ]
     },
     "resolveJsonModule": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "typeRoots": [
+      "./node_modules/@types",
+      "./src/typings"
+    ],
+    "types": [
+      "node",
+    ],
   },
-  "include": ["src/**/*.ts"]
+  "include": [
+    "src/**/*.ts"
+  ],
 }
