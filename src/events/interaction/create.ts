@@ -24,7 +24,7 @@ export default new Event({
 	}
 
 	// component interactions
-	if (interaction.isMessageComponent()) {
+	if (interaction.isMessageComponent() || interaction.isSelectMenu() || interaction.isButton()) {
 		// if not in collection return
 		if (!client.components.has(interaction.customId)) return;
 
