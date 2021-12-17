@@ -19,9 +19,17 @@ export default class extends Client {
 
 		// Register commands with the discord API
 		this.once('ready', () => {
+			// Put command data in an array
 			const commands = this.commands.map((c) => c.data);
 
-			this.guilds.cache.get(constants.guild).commands.set(commands);
+			// Set the commands
+			this.guilds.cache.get(constants.guild).commands.set(commands).then(cmds => {
+				cmds.forEach(cmd => {
+					// Set the command's permission
+					const permissions = this.commands.get(cmd.name).permissions;
+					permissions && cmd.permissions.set({ permissions });
+				});
+			});
 		});
 	}
 }

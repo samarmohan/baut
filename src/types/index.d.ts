@@ -1,8 +1,8 @@
-import { ChatInputApplicationCommandData, CommandInteraction, GuildApplicationCommandPermissionData } from 'discord.js';
+import { ChatInputApplicationCommandData, CommandInteraction, ApplicationCommandPermissionData } from 'discord.js';
 import Client from '~/structures/Client';
 
 export interface CommandOptions extends ChatInputApplicationCommandData {
-	permissions?: GuildApplicationCommandPermissionData[];
+	permissions?: ApplicationCommandPermissionData[];
 }
   
 export type CommandFunction = (client?: Client, interaction: CommandInteraction) => void | Promise<void>

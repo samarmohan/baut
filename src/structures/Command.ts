@@ -1,10 +1,10 @@
-import { ApplicationCommandData, GuildApplicationCommandPermissionData } from 'discord.js';
+import { ApplicationCommandData, ApplicationCommandPermissionData } from 'discord.js';
 import { CommandOptions, CommandFunction } from '../types';
 
 export default class {
 	public name: string;
 	public data: ApplicationCommandData;
-	public permissions: GuildApplicationCommandPermissionData[];
+	public permissions: ApplicationCommandPermissionData[];
 
 	constructor (
 		private config: CommandOptions,
