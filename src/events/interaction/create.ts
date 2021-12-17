@@ -22,4 +22,22 @@ export default new Event({
 			});
 		}
 	}
+
+	// component interactions
+	if (interaction.isMessageComponent()) {
+		// if not in collection return
+		if (!client.components.has(interaction.customId)) return;
+
+		try {
+			// execute component logic
+			await client.components.get(interaction.customId).run(client, interaction);
+		} catch (error) {
+			// respond with error messsage
+			console.log(error);
+			await interaction.reply({
+				content: `There was an error while executing this component!\n\`\`\`${error}\`\`\``,
+				ephemeral: true,
+			});
+		}
+	}
 });

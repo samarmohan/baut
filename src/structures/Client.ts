@@ -1,11 +1,14 @@
 import { Client, ClientOptions, Collection } from 'discord.js';
 import Command from './Command';
 import { constants } from '../config';
-import { loadEvents, loadCommands } from '../util/fileloader';
+import { loadEvents, loadCommands, loadComponents } from '../util/fileloader';
+import Component from './Component';
 
 export default class extends Client {
 	// The commands collection
 	commands: Collection<string, Command> = new Collection();
+	// The components collection
+	components: Collection<string, Component> = new Collection();
 	// Access constants on the client
 	public constants = constants;
 
@@ -13,9 +16,10 @@ export default class extends Client {
 		// Call the parent constructor
 		super(options);
 
-		// Load the events and commands
+		// Load the events, commands and components
 		loadEvents(this, 'src/events');
 		loadCommands(this, 'src/cmds');
+		loadComponents(this, 'src/comps');
 
 		// Register commands with the discord API
 		this.once('ready', () => {

@@ -4,6 +4,7 @@ import { resolve, basename } from 'path';
 
 import Client from '../structures/Client';
 import Command from '../structures/Command';
+import Component from '../structures/Component';
 
 /**
  * Recursively load files
@@ -65,5 +66,28 @@ export async function loadCommands (client: Client, dir: string): Promise<void> 
   
 		client.commands.set(command.name, command);
 		console.log(`Loaded command ${command.name}`);
+	}
+}
+
+/**
+ * Load all of the components recursively
+ * @param {Client} client The Discord client
+ * @param {string} dir The root components directory
+ */
+export async function loadComponents (client: Client, dir: string): Promise<void> {
+	const files = fileloader(dir);
+
+	for await (const file of files) {
+
+		const component = await import(file).then(m => m.default || m);
+		if (!(component instanceof Component)) continue;
+  
+		if (!component.id) {
+			console.error(`Failed to load component ${basename(file)} as it has no id`);
+			continue;
+		}
+
+		client.components.set(component.id, component);
+		console.log(`Loaded component ${component.id}`);
 	}
 }
