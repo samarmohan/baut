@@ -4,7 +4,7 @@ import 'dotenv/config';
 export const token = process.env.TOKEN;
 
 export const constants = {
-	guild: '575001822998298642',
+	guild: '913668807015407646',
 	channels: {
 		about: '913729308676202506',
 		intros: '913701412578418718',
