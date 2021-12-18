@@ -10,6 +10,9 @@ export default new Component(
 			interaction.member = interaction.guild.members.cache.get(interaction.user.id);
 		}
 
+		// Descructure constants
+		const { roles } = client.constants;
+
 		// Create location embed
 		const locationEmbed = new MessageEmbed()
 			.setTitle('Where are you located?')
@@ -25,52 +28,50 @@ export default new Component(
 						label: 'North America',
 						value: 'north_america', // If in config using object, use id of role or key name for value
 						emoji: '🇺🇸',
+						default: interaction.member.roles.cache.has(roles.location.north_america),
 					},
 					{
 						label: 'South America',
 						value: 'south_america',
 						emoji: '🇧🇷',
+						default: interaction.member.roles.cache.has(roles.location.south_america),
 					},
 					{
 						label: 'Europe',
 						value: 'europe',
 						emoji: '🇪🇺',
+						default: interaction.member.roles.cache.has(roles.location.europe),
 					},
 					{
 						label: 'Asia',
 						value: 'asia',
 						emoji: '🇮🇳',
+						default: interaction.member.roles.cache.has(roles.location.asia),
 					},
 					{
 						label: 'Africa',
 						value: 'africa',
 						emoji: '🇿🇦',
+						default: interaction.member.roles.cache.has(roles.location.africa),
 					},
 					{
 						label: 'Oceania',
 						value: 'oceania',
 						emoji: '🇦🇺',
+						default: interaction.member.roles.cache.has(roles.location.oceania),
 					},
 					{
-						label: 'Antarctica',
-						value: 'antarctica',
+						label: 'Antartica',
+						value: 'antartica',
 						emoji: '🇦🇶',
+						default: interaction.member.roles.cache.has(roles.location.antartica),
 					}
 				])
 				.setCustomId('locationSelect')
+				.setPlaceholder('Select a continent')
 		);
 
 		// Send the careers embed
 		await interaction.reply({ embeds: [locationEmbed], components: [locationSelectMenu], ephemeral: true });
 	}
 );
-
-
-/*
-south_america: '914062822491693076',
-europe: '914062876480794634',
-oceania: '914062934479605760',
-asia: '914062611618889798',
-africa: '914062909162803260',
-antartica: '914063088960036915',
-*/

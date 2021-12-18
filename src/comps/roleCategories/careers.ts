@@ -10,6 +10,9 @@ export default new Component(
 			interaction.member = interaction.guild.members.cache.get(interaction.user.id);
 		}
 
+		// Descructure constants
+		const { roles } = client.constants;
+
 		// Create careers embed
 		const careersEmbed = new MessageEmbed()
 			.setTitle('What do you do?')
@@ -25,21 +28,25 @@ export default new Component(
 						label: 'Developer',
 						value: '913789663767040001', // If in config using array, use id of role for value
 						emoji: '💻',
+						default: interaction.member.roles.cache.has('913789663767040001'),
 					},
 					{
 						label: 'Designer',
 						value: '913791003633266729',
 						emoji: '🎨',
+						default: interaction.member.roles.cache.has('913791003633266729'),
 					},
 					{
 						label: 'Entrepreneur',
 						value: '913791069378990100',
 						emoji: '💼',
+						default: interaction.member.roles.cache.has('913791069378990100'),
 					},
 					{
 						label: 'Creator',
 						value: '913791371163336744',
 						emoji: '🖌',
+						default: interaction.member.roles.cache.has('913791371163336744'),
 					},
 				])
 				.setCustomId('career')
