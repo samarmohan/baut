@@ -33,9 +33,7 @@ export default new Command({
 					.setStyle('SECONDARY')
 					.setEmoji('📊')
 					.setCustomId('experience'),
-				// TODO: Add notification roles
 				new MessageButton()
-					.setDisabled(true)
 					.setLabel('Notifications')
 					.setStyle('SECONDARY')
 					.setEmoji('🔔')
