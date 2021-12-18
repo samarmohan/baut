@@ -23,9 +23,7 @@ export default new Command({
 					.setStyle('SECONDARY')
 					.setEmoji('🗺')
 					.setCustomId('location'),
-				// TODO: Add pronoun roles
 				new MessageButton()
-					.setDisabled(true)
 					.setLabel('Pronouns')
 					.setStyle('SECONDARY')
 					.setEmoji('🗣')
