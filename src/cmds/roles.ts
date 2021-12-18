@@ -28,9 +28,7 @@ export default new Command({
 					.setStyle('SECONDARY')
 					.setEmoji('🗣')
 					.setCustomId('pronouns'),
-				// TODO: Add experience roles
 				new MessageButton()
-					.setDisabled(true)
 					.setLabel('Experience')
 					.setStyle('SECONDARY')
 					.setEmoji('📊')
