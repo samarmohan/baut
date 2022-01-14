@@ -75,7 +75,7 @@ export const constants = {
   thankyou: `
   Thank you for joining us. Whether you're a rookie, or a professional, or somewhere in between, Buildergroop is the place for you.
 
-  We wish to support and empower all the gen-z individuals out there that want to change the world with technology.
+  We wish to empower all the young developers, designers, entrepreneurs, community builders, and other awesome individuals out there that want to change the world.
 
   If you'd like to support our mission, you can send out this permanent invite link to anyone that might find Buildergroop interesting: https://buildergroop.com
 
