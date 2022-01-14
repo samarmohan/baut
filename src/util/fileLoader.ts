@@ -1,27 +1,27 @@
-import { PathLike } from 'fs';
-import { readdir } from 'fs/promises';
-import { resolve, basename } from 'path';
+import { PathLike } from "fs";
+import { readdir } from "fs/promises";
+import { resolve, basename } from "path";
 
-import Client from '../structures/Client';
-import Command from '../structures/Command';
-import Component from '../structures/Component';
+import Client from "../structures/Client";
+import Command from "../structures/Command";
+import Component from "../structures/Component";
 
 /**
  * Recursively load files
  * @param {string} dir The root dir
  */
-export default async function* fileloader (dir: string) {
-	const files = await readdir(dir, { withFileTypes: true });
-	
-	for (const file of files) {
-		const res: PathLike = resolve(dir, file.name);
+export default async function* fileloader(dir: string) {
+  const files = await readdir(dir, { withFileTypes: true });
 
-		if (file.isDirectory()) {
-			yield * fileloader(res);
-		} else {
-			yield res;
-		}
-	}
+  for (const file of files) {
+    const res: PathLike = resolve(dir, file.name);
+
+    if (file.isDirectory()) {
+      yield* fileloader(res);
+    } else {
+      yield res;
+    }
+  }
 }
 
 /**
@@ -29,21 +29,21 @@ export default async function* fileloader (dir: string) {
  * @param {Client} client The Discord client
  * @param {string} dir The dir containing the event files
  */
-export async function loadEvents (client: Client, dir: string) {
-	const files = fileloader(dir);
+export async function loadEvents(client: Client, dir: string) {
+  const files = fileloader(dir);
 
-	for await (const file of files) {
-		
-		const event = await import(file).then(m => m.default || m);
-  
-		if (event.once) {
-			client.once(event.name, (...args) => event.execute(client, ...args));
-		} else {
-			client.on(event.name, (...args) => event.execute(client, ...args));
-		}
+  for await (const file of files) {
+    const importedFile = require(file);
+    const event = importedFile.default || importedFile;
 
-		console.log(`Loaded event ${event.name}`);
-	}
+    if (event.once) {
+      client.once(event.name, (...args) => event.execute(client, ...args));
+    } else {
+      client.on(event.name, (...args) => event.execute(client, ...args));
+    }
+
+    console.log(`Loaded event ${event.name}`);
+  }
 }
 
 /**
@@ -51,22 +51,25 @@ export async function loadEvents (client: Client, dir: string) {
  * @param {Client} client The Discord client
  * @param {string} dir The root commands directory
  */
-export async function loadCommands (client: Client, dir: string): Promise<void> {
-	const files = fileloader(dir);
+export async function loadCommands(client: Client, dir: string): Promise<void> {
+  const files = fileloader(dir);
 
-	for await (const file of files) {
+  for await (const file of files) {
+    const importedFile = require(file);
+    const command: Command = importedFile.default || importedFile;
 
-		const command: Command = await import(file).then(m => m.default || m);
-		if (!(command instanceof Command)) continue;
-  
-		if (!command.name) {
-			console.error(`Failed to load command ${basename(file)} as it has no name`);
-			continue;
-		}
-  
-		client.commands.set(command.name, command);
-		console.log(`Loaded command ${command.name}`);
-	}
+    if (!(command instanceof Command)) continue;
+
+    if (!command.name) {
+      console.error(
+        `Failed to load command ${basename(file)} as it has no name`
+      );
+      continue;
+    }
+
+    client.commands.set(command.name, command);
+    console.log(`Loaded command ${command.name}`);
+  }
 }
 
 /**
@@ -74,20 +77,26 @@ export async function loadCommands (client: Client, dir: string): Promise<void> 
  * @param {Client} client The Discord client
  * @param {string} dir The root components directory
  */
-export async function loadComponents (client: Client, dir: string): Promise<void> {
-	const files = fileloader(dir);
+export async function loadComponents(
+  client: Client,
+  dir: string
+): Promise<void> {
+  const files = fileloader(dir);
 
-	for await (const file of files) {
+  for await (const file of files) {
+    const importedFile = require(file);
+    const component = importedFile.default || importedFile;
 
-		const component = await import(file).then(m => m.default || m);
-		if (!(component instanceof Component)) continue;
-  
-		if (!component.id) {
-			console.error(`Failed to load component ${basename(file)} as it has no id`);
-			continue;
-		}
+    if (!(component instanceof Component)) continue;
 
-		client.components.set(component.id, component);
-		console.log(`Loaded component ${component.id}`);
-	}
+    if (!component.id) {
+      console.error(
+        `Failed to load component ${basename(file)} as it has no id`
+      );
+      continue;
+    }
+
+    client.components.set(component.id, component);
+    console.log(`Loaded component ${component.id}`);
+  }
 }

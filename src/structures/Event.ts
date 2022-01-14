@@ -1,14 +1,15 @@
-import { EventFunction } from '../types';
+import { ClientEvents } from "discord.js";
+import { EventFunction } from "../types";
 
 export default class {
-	public name: string;
-	public once?: boolean;
+  public name: keyof ClientEvents;
+  public once?: boolean;
 
-	constructor (
-		private options: { name: string, once?: boolean },
-		public execute: EventFunction
-	) {
-		this.name = options.name;
-		this.once = options.once;
-	}
+  constructor(
+    private options: { name: keyof ClientEvents; once?: boolean },
+    public execute: EventFunction
+  ) {
+    this.name = options.name;
+    this.once = options.once;
+  }
 }
