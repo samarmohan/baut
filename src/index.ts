@@ -1,7 +1,4 @@
-import { Bot } from "./Bot";
+import Client from "./structures/Client";
+import { token, clientOptions } from "./config";
 
-async function main() {
-  await Bot.start();
-}
-
-main().catch((err) => console.error(err));
+new Client(clientOptions).login(token).catch(console.error);

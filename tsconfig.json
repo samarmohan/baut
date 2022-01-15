@@ -1,6 +1,8 @@
 {
   "compilerOptions": {
-    "lib": ["ES2015"],
+    "lib": ["ES2017"],
+    "target": "ES2017",
+    "moduleResolution": "node",
     "outDir": "dist",
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
@@ -19,7 +21,9 @@
       "~/*": ["./src/*"]
     },
     "resolveJsonModule": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "typeRoots": ["./node_modules/@types", "./src/typings"],
+    "types": ["node"]
   },
   "include": ["src/**/*.ts"]
 }

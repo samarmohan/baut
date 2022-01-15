@@ -4,6 +4,7 @@
   "description": "The official discord bot for the buildergroop community.",
   "main": "dist/index.js",
   "private": "false",
+  "type": "module",
   "scripts": {
     "build": "tsc",
     "watch": "ts-node-dev --respawn src/index.ts",
@@ -18,6 +19,9 @@
   "devDependencies": {
     "@types/axios": "^0.14.0",
     "@types/node": "^16.11.12",
+    "@typescript-eslint/eslint-plugin": "^5.7.0",
+    "@typescript-eslint/parser": "^5.7.0",
+    "eslint": "^8.4.1",
     "ts-node": "^8.10.1",
     "ts-node-dev": "^1.0.0-pre.44",
     "typescript": "^4.5.4"
