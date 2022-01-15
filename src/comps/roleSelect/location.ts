@@ -20,7 +20,7 @@ export default new Component(
 		const { roles } = client.constants;
 
 		// Update the roles
-		single_select(interaction.member, roles.career, options[0]);
+		single_select(interaction.member, roles.location, options[0]);
 
 		// Send the confirmation message
 		await interaction.reply({
