@@ -6,11 +6,11 @@ export const guild = process.env.GUILD;
 
 export const constants = {
   channels: {
-    about: "931149923976613889", // 913729308676202506
-    intros: "931211852929712190", // 913701412578418718
+    about: "913729308676202506",
+    intros: "913701412578418718",
     info: "913669662649237564",
-    rules: "931151966829178890", // 913669662649237564
-    roles: "929317788659621889", // 913709531442315324
+    rules: "913669662649237564",
+    roles: "913709531442315324",
   },
   roles: {
     // Career - Using as a test array, can be changed
