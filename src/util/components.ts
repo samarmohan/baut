@@ -14,27 +14,27 @@ export function careerSelectMenu(member?: GuildMember) {
       .addOptions([
         {
           label: "Developer",
-          value: "913789663767040001", // If in config using array, use id of role for value
+          value: roles.career[0], // If in config using array, use id of role for value
           emoji: "💻",
-          default: member?.roles.cache.has("913789663767040001") || false,
+          default: member?.roles.cache.has(roles.career[0]) || false,
         },
         {
           label: "Designer",
-          value: "913791003633266729",
+          value: roles.career[1],
           emoji: "🎨",
-          default: member?.roles.cache.has("913791003633266729") || false,
+          default: member?.roles.cache.has(roles.career[1]) || false,
         },
         {
           label: "Entrepreneur",
-          value: "913791069378990100",
+          value: roles.career[2],
           emoji: "💼",
-          default: member?.roles.cache.has("913791069378990100") || false,
+          default: member?.roles.cache.has(roles.career[2]) || false,
         },
         {
           label: "Creator",
-          value: "913791371163336744",
+          value: roles.career[3],
           emoji: "🎬",
-          default: member?.roles.cache.has("913791371163336744") || false,
+          default: member?.roles.cache.has(roles.career[3]) || false,
         },
       ])
       .setCustomId("career")
