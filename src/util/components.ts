@@ -13,28 +13,46 @@ export function careerSelectMenu(member?: GuildMember) {
     new MessageSelectMenu()
       .addOptions([
         {
-          label: "Developer",
+          label: "Programming",
           value: roles.career[0], // If in config using array, use id of role for value
           emoji: "💻",
           default: member?.roles.cache.has(roles.career[0]) || false,
         },
         {
-          label: "Designer",
+          label: "Design",
           value: roles.career[1],
           emoji: "🎨",
           default: member?.roles.cache.has(roles.career[1]) || false,
         },
         {
-          label: "Entrepreneur",
+          label: "Entrepreneurship",
           value: roles.career[2],
           emoji: "💼",
           default: member?.roles.cache.has(roles.career[2]) || false,
         },
         {
-          label: "Creator",
+          label: "Web3",
           value: roles.career[3],
-          emoji: "🎬",
+          emoji: "🌐",
           default: member?.roles.cache.has(roles.career[3]) || false,
+        },
+        {
+          label: "Finance",
+          value: roles.career[4],
+          emoji: "💰",
+          default: member?.roles.cache.has(roles.career[4]) || false,
+        },
+        {
+          label: "Social Media",
+          value: roles.career[5],
+          emoji: "🤳🏻",
+          default: member?.roles.cache.has(roles.career[5]) || false,
+        },
+        {
+          label: "Creatorship",
+          value: roles.career[6],
+          emoji: "🎬",
+          default: member?.roles.cache.has(roles.career[6]) || false,
         },
       ])
       .setCustomId("career")
@@ -117,6 +135,10 @@ export function locationSelectMenu(member?: GuildMember) {
 }
 
 export const notificationButtons = new MessageActionRow().addComponents(
+  new MessageButton()
+    .setLabel("Event Ping")
+    .setCustomId("event_ping")
+    .setStyle("SECONDARY"),
   new MessageButton()
     .setLabel("Server Inactivity Ping")
     .setCustomId("inactivity_ping")

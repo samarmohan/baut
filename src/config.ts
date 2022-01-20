@@ -8,17 +8,19 @@ export const constants = {
   channels: {
     about: "913729308676202506",
     intros: "913701412578418718",
-    info: "913669662649237564",
     rules: "913669662649237564",
     roles: "913709531442315324",
   },
   roles: {
-    // Career - Using as a test array, can be changed
+    // Career
     career: [
-      "913789663767040001", // developer
-      "913791003633266729", // designer
-      "913791069378990100", // entrepreneur
-      "913791371163336744", // creator
+      "913789663767040001", // programming
+      "913791003633266729", // design
+      "913791069378990100", // entrepreneurship
+      "933713452285960213", // web3
+      "933713354730659920", // finance
+      "933712617573335051", // social media
+      "913791371163336744", // creatorship
     ],
     // Pronouns
     pronouns: {
