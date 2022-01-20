@@ -4,6 +4,8 @@ import {
   MessageButton,
   MessageAttachment,
 } from "discord.js";
+import { checkMember } from "../util/checkMember";
+import { verifyAdmin } from "../util/verifyAdmin";
 import Command from "../structures/Command";
 
 export default new Command(
@@ -12,6 +14,9 @@ export default new Command(
     description: "Send the server rules. (Admin Only Command)",
   },
   async (client, interaction) => {
+    checkMember(interaction);
+    if (!verifyAdmin(interaction)) return;
+
     // Descructure constants
     const { rules, channels, thankyou } = client.constants;
 
@@ -47,7 +52,7 @@ export default new Command(
       .setDescription(thankyou);
 
     // Create the social action row
-    const sociaRow = new MessageActionRow().addComponents(
+    const socialRow = new MessageActionRow().addComponents(
       new MessageButton()
         .setLabel("GitHub")
         .setStyle("LINK")
@@ -71,14 +76,14 @@ export default new Command(
     );
 
     // Send the embeds and action row
-    await interaction.channel.send({
-      files: [headerImage],
-      embeds: [welcomeEmbed, rulesEmbed, infoEmbed],
-      components: [sociaRow],
-    });
     await interaction.reply({
       content: "Rules posted!",
       ephemeral: true,
+    });
+    await interaction.channel.send({
+      files: [headerImage],
+      embeds: [welcomeEmbed, rulesEmbed, infoEmbed],
+      components: [socialRow],
     });
   }
 );

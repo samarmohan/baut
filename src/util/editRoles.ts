@@ -80,7 +80,7 @@ export function single_select(
         // Remove the role
         member.roles.remove(id);
       } else if (
-        !member.roles.cache.has(selected) &&
+        !member.roles.cache.has(id) &&
         (id === selected || role === selected)
       ) {
         // Add the role
