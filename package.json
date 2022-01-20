@@ -4,11 +4,10 @@
   "description": "The official discord bot for the buildergroop community.",
   "main": "dist/index.js",
   "private": "false",
-  "type": "module",
   "scripts": {
     "build": "tsc",
     "watch": "ts-node-dev --respawn src/index.ts",
-    "start": "node dist/index.js"
+    "start": "ts-node src/index.ts"
   },
   "author": "Aaryaman Maheshwari",
   "license": "Apache-2.0",
