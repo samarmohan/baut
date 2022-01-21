@@ -1,7 +1,7 @@
 import { GuildMember } from "discord.js";
-import { experienceButtons } from "../../util/components";
-import { experienceEmbed } from "../../util/embeds";
-import Component from "../../structures/Component";
+import { experienceButtons } from "../../util/components.js";
+import { experienceEmbed } from "../../util/embeds.js";
+import Component from "../../structures/Component.js";
 
 export default new Component("experience", async (client, interaction) => {
   // Check if the type of user is a member

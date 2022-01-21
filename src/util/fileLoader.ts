@@ -2,9 +2,9 @@ import { PathLike } from "fs";
 import { readdir } from "fs/promises";
 import { resolve, basename } from "path";
 
-import Client from "../structures/Client";
-import Command from "../structures/Command";
-import Component from "../structures/Component";
+import Client from "../structures/Client.js";
+import Command from "../structures/Command.js";
+import Component from "../structures/Component.js";
 
 /**
  * Recursively load files
@@ -33,7 +33,7 @@ export async function loadEvents(client: Client, dir: string) {
   const files = fileloader(dir);
 
   for await (const file of files) {
-    const importedFile = require(file);
+    const importedFile = await import(file);
     const event = importedFile.default || importedFile;
 
     if (event.once) {
@@ -55,7 +55,7 @@ export async function loadCommands(client: Client, dir: string): Promise<void> {
   const files = fileloader(dir);
 
   for await (const file of files) {
-    const importedFile = require(file);
+    const importedFile = await import(file);
     const command: Command = importedFile.default || importedFile;
 
     if (!(command instanceof Command)) continue;
@@ -84,7 +84,7 @@ export async function loadComponents(
   const files = fileloader(dir);
 
   for await (const file of files) {
-    const importedFile = require(file);
+    const importedFile = await import(file);
     const component = importedFile.default || importedFile;
 
     if (!(component instanceof Component)) continue;

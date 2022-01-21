@@ -1,9 +1,15 @@
 {
+  "include": ["src"],
   "compilerOptions": {
-    "lib": ["ES2017"],
-    "target": "ES2017",
-    "moduleResolution": "node",
+    "target": "ES2020",
+    "lib": ["ES2015", "DOM"],
+    "declaration": true,
     "outDir": "dist",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "importHelpers": true,
+    "allowSyntheticDefaultImports": false,
+    "esModuleInterop": false,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "strictFunctionTypes": false,
@@ -15,15 +21,7 @@
     "noImplicitThis": false,
     "noUnusedParameters": false,
     "noUnusedLocals": false,
-    "baseUrl": ".",
     "skipLibCheck": true,
-    "paths": {
-      "~/*": ["./src/*"]
-    },
-    "resolveJsonModule": true,
-    "esModuleInterop": true,
-    "typeRoots": ["./node_modules/@types", "./src/typings"],
-    "types": ["node"]
-  },
-  "include": ["src/**/*.ts"]
+    "resolveJsonModule": true
+  }
 }

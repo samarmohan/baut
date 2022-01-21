@@ -1,5 +1,5 @@
 import { GuildMember } from "discord.js";
-import Event from "../../structures/Event";
+import Event from "../../structures/Event.js";
 
 export default new Event(
   {

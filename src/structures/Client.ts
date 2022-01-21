@@ -1,8 +1,12 @@
 import { Client, ClientOptions, Collection } from "discord.js";
-import Command from "./Command";
-import { constants, guild } from "../config";
-import { loadEvents, loadCommands, loadComponents } from "../util/fileloader";
-import Component from "./Component";
+import Command from "./Command.js";
+import { constants, guild } from "../config.js";
+import {
+  loadEvents,
+  loadCommands,
+  loadComponents,
+} from "../util/fileloader.js";
+import Component from "./Component.js";
 
 export default class extends Client {
   // The commands collection

@@ -4,8 +4,8 @@ import {
   MessageButton,
   MessageAttachment,
 } from "discord.js";
-import { checkMember } from "../util/checkMember";
-import { verifyAdmin } from "../util/verifyAdmin";
+import { checkMember } from "../util/checkMember.js";
+import { verifyAdmin } from "../util/verifyAdmin.js";
 import Command from "../structures/Command";
 
 export default new Command(

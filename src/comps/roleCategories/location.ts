@@ -1,7 +1,7 @@
 import { GuildMember } from "discord.js";
-import { locationSelectMenu } from "../../util/components";
-import { locationEmbed } from "../../util/embeds";
-import Component from "../../structures/Component";
+import { locationSelectMenu } from "../../util/components.js";
+import { locationEmbed } from "../../util/embeds.js";
+import Component from "../../structures/Component.js";
 
 export default new Component("location", async (client, interaction) => {
   // Check if the type of user is a member

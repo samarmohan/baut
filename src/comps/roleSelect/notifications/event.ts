@@ -1,6 +1,6 @@
 import { GuildMember } from "discord.js";
-import { toggle_select } from "../../../util/editRoles";
-import Component from "../../../structures/Component";
+import { toggle_select } from "../../../util/editRoles.js";
+import Component from "../../../structures/Component.js";
 
 export default new Component("event_ping", async (client, interaction) => {
   // Check for component type

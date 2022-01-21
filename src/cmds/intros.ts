@@ -1,5 +1,5 @@
 import { GuildMember, MessageEmbed } from "discord.js";
-import Command from "../structures/Command";
+import Command from "../structures/Command.js";
 
 export default new Command(
   {

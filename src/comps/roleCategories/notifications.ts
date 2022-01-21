@@ -1,7 +1,7 @@
 import { GuildMember } from "discord.js";
-import { notificationButtons } from "../../util/components";
-import Component from "../../structures/Component";
-import { notificationEmbed } from "../../util/embeds";
+import { notificationButtons } from "../../util/components.js";
+import Component from "../../structures/Component.js";
+import { notificationEmbed } from "../../util/embeds.js";
 
 export default new Component("notifications", async (client, interaction) => {
   // Check if the type of user is a member

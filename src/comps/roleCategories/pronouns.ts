@@ -1,7 +1,7 @@
 import { GuildMember } from "discord.js";
-import { pronounsEmbed } from "../../util/embeds";
-import Component from "../../structures/Component";
-import { pronounSelectMenu } from "../../util/components";
+import { pronounsEmbed } from "../../util/embeds.js";
+import Component from "../../structures/Component.js";
+import { pronounSelectMenu } from "../../util/components.js";
 
 export default new Component("pronouns", async (client, interaction) => {
   // Check if the type of user is a member

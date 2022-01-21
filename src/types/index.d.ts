@@ -6,7 +6,7 @@ import {
   SelectMenuInteraction,
   ButtonInteraction,
 } from "discord.js";
-import Client from "~/structures/Client";
+import Client from "../structures/Client.js";
 
 export interface CommandOptions extends ChatInputApplicationCommandData {
   permissions?: ApplicationCommandPermissionData[];

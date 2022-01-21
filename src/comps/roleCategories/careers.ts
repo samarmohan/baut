@@ -1,7 +1,7 @@
 import { GuildMember } from "discord.js";
-import { careerSelectMenu } from "../../util/components";
-import Component from "../../structures/Component";
-import { careerEmbed } from "../../util/embeds";
+import { careerSelectMenu } from "../../util/components.js";
+import Component from "../../structures/Component.js";
+import { careerEmbed } from "../../util/embeds.js";
 
 export default new Component("careers", async (client, interaction) => {
   // Check if the type of user is a member

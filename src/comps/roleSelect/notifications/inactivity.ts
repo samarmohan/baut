@@ -1,27 +1,27 @@
-import { GuildMember } from 'discord.js';
-import { toggle_select } from '../../../util/editRoles';
-import Component from '../../../structures/Component';
+import { GuildMember } from "discord.js";
+import { toggle_select } from "../../../util/editRoles.js";
+import Component from "../../../structures/Component.js";
 
-export default new Component(
-	'inactivity_ping',
-	async (client, interaction) => {
-		// Check for component type
-		if (!interaction.isButton()) return;
+export default new Component("inactivity_ping", async (client, interaction) => {
+  // Check for component type
+  if (!interaction.isButton()) return;
 
-		// Check if the type of user is a member
-		if (!(interaction.member instanceof GuildMember)) {
-			// Get the member
-			interaction.member = interaction.guild.members.cache.get(interaction.user.id);
-		}
+  // Check if the type of user is a member
+  if (!(interaction.member instanceof GuildMember)) {
+    // Get the member
+    interaction.member = interaction.guild.members.cache.get(
+      interaction.user.id
+    );
+  }
 
-		// Toggle the role
-		const change = toggle_select(interaction.member, interaction.customId)
+  // Toggle the role
+  const change = toggle_select(interaction.member, interaction.customId);
 
-		// Send the confirmation message
-		await interaction.reply({
-			content: `${change ? 'Added' : 'Removed'} the **Server Inactivity Ping** role.`,
-			ephemeral: true,
-		})
-
-	}
-);
+  // Send the confirmation message
+  await interaction.reply({
+    content: `${
+      change ? "Added" : "Removed"
+    } the **Server Inactivity Ping** role.`,
+    ephemeral: true,
+  });
+});
