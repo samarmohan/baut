@@ -4,7 +4,7 @@ import Command from "../structures/Command.js";
 export default new Command(
   {
     name: "introduction",
-    description: "View how your introduction is supposed to be structured",
+    description: "View the recommended template for your introduction",
   },
   async (client, interaction) => {
     // Check if the type of user is a member
