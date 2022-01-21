@@ -1,24 +1,26 @@
+import { config, Command } from "@mammot/core";
 import {
-  MessageEmbed,
+  CommandInteraction,
   MessageActionRow,
-  MessageButton,
   MessageAttachment,
+  MessageButton,
+  MessageEmbed,
 } from "discord.js";
-import { checkMember } from "../util/checkMember.js";
-import { verifyAdmin } from "../util/verifyAdmin.js";
-import Command from "../structures/Command";
+import { channels, embedMessages, media } from "../guild";
+import { checkMember } from "../util/checkMember";
+import { verifyAdmin } from "../util/verifyAdmin";
 
-export default new Command(
-  {
-    name: "rules",
-    description: "Send the server rules. (Admin Only Command)",
-  },
-  async (client, interaction) => {
+@config("rules", { description: "Send the server rules. (Admin Only Command)" })
+export class RulesCommand extends Command {
+  public async run(interaction: CommandInteraction) {
+    // Check if the user is a member and not a bot
     checkMember(interaction);
+
+    // Check if the user is an admin
     if (!verifyAdmin(interaction)) return;
 
     // Descructure constants
-    const { rules, channels, thankyou } = client.constants;
+    const { rules, thankYou } = embedMessages;
 
     // Check if the channel is the rules channel
     if (interaction.channel.id !== channels.rules) {
@@ -49,7 +51,7 @@ export default new Command(
     const infoEmbed = new MessageEmbed()
       .setColor("#C930FF")
       .setTitle("Thanks for joining!")
-      .setDescription(thankyou);
+      .setDescription(thankYou);
 
     // Create the social action row
     const socialRow = new MessageActionRow().addComponents(
@@ -71,9 +73,7 @@ export default new Command(
     );
 
     // create the header image attachment
-    const headerImage = new MessageAttachment(
-      "https://media.discordapp.net/attachments/913702607510466651/913877293619904613/Rules_And_Info.png"
-    );
+    const headerImage = new MessageAttachment(media.rulesHeaderImage);
 
     // Send the embeds and action row
     await interaction.reply({
@@ -86,4 +86,4 @@ export default new Command(
       components: [socialRow],
     });
   }
-);
+}

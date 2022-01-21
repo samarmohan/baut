@@ -1,4 +1,10 @@
-import Client from "./structures/Client.js";
-import { token, clientOptions } from "./config.js";
+import { Mammot } from "@mammot/core";
+import { commands } from "./commands";
+import { clientOptions } from "./config";
+import { token } from "./constants";
 
-new Client(clientOptions).login(token).catch(console.error);
+export const mammot = Mammot.client({
+  ...clientOptions,
+});
+
+mammot.addCommands(commands).login(token);

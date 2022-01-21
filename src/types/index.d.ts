@@ -26,3 +26,8 @@ export type ComponentFunction = (
     | SelectMenuInteraction
     | ButtonInteraction
 ) => void | Promise<void>;
+
+export interface EmbedMessages {
+  rules: string;
+  thankYou: string;
+}
