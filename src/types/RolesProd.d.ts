@@ -1,4 +1,4 @@
-export interface RolesProd {
+export interface Roles {
   career: string[];
   pronouns: Pronouns;
   location: Location;

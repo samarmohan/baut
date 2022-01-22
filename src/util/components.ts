@@ -4,9 +4,7 @@ import {
   MessageButton,
   MessageSelectMenu,
 } from "discord.js";
-import { constants } from "../config.js";
-
-const { roles } = constants;
+import { roles } from "../constants";
 
 export function careerSelectMenu(member?: GuildMember) {
   return new MessageActionRow().addComponents(

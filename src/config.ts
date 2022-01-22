@@ -2,7 +2,7 @@ import { MammotOptions } from "@mammot/core";
 import { Intents } from "discord.js";
 
 export const clientOptions: MammotOptions = {
-  developmentGuild: process.env.DEVELOPMENT_GUILD_ID!,
+  developmentGuild: process.env.DEVELOPMENT_GUILD_ID,
   partials: ["CHANNEL", "MESSAGE", "REACTION", "USER", "GUILD_MEMBER"],
 
   intents: [
