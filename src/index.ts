@@ -1,7 +1,7 @@
 import { Mammot } from "@mammot/core";
 import { RulesCommand, PingCommand, IntroCommand, RolesCommand } from "./cmds";
 import { clientOptions } from "./config";
-import { token } from "./constants";
+import 'dotenv/config';
 
 export const mammot = Mammot.client({
   ...clientOptions,
@@ -9,4 +9,4 @@ export const mammot = Mammot.client({
 
 mammot
   .addCommands([RulesCommand, PingCommand, IntroCommand, RolesCommand])
-  .login(token);
+  .login(process.env.DISCORD_TOKEN);

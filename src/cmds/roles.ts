@@ -5,24 +5,23 @@ import {
   MessageAttachment,
 } from "discord.js";
 import { config, Command } from "@mammot/core";
+import { verifyAdmin } from "../util/verifyAdmin";
 
 @config("roles", {
   description: "Select your self-assigned roles (Admin Only Command)",
+  inhibitors: [verifyAdmin()],
 })
 export class RolesCommand extends Command {
   public async run(interaction: CommandInteraction) {
     const rolesChannel = "934094517525676042";
     const rulesChannel = "913669662649237564";
 
-    // Check if the channel is the rules channel
     if (interaction.channel.id !== rolesChannel) {
       // Direct users to the rules channel
-      await interaction.reply({
+      return await interaction.reply({
         content: `Please go to <#${rulesChannel}> to view the server rules.`,
         ephemeral: true,
       });
-
-      return;
     }
 
     // Invisible divider
