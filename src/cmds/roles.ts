@@ -1,24 +1,24 @@
-import { MessageActionRow, MessageAttachment, MessageButton } from "discord.js";
-import Command from "../structures/Command";
-import { checkMember } from "../util/checkMember.js";
-import { verifyAdmin } from "../util/verifyAdmin.js";
+import {
+  MessageActionRow,
+  MessageButton,
+  CommandInteraction,
+  MessageAttachment,
+} from "discord.js";
+import { config, Command } from "@mammot/core";
 
-export default new Command(
-  {
-    name: "roles",
-    description: "Select your self-assigned roles (Admin Only Command)",
-  },
-  async (client, interaction) => {
-    checkMember(interaction);
-    if (!verifyAdmin(interaction)) return;
-
-    const { channels } = client.constants;
+@config("roles", {
+  description: "Select your self-assigned roles (Admin Only Command)",
+})
+export class RolesCommand extends Command {
+  public async run(interaction: CommandInteraction) {
+    const rolesChannel = "934094517525676042";
+    const rulesChannel = "913669662649237564";
 
     // Check if the channel is the rules channel
-    if (interaction.channel.id !== channels.roles) {
+    if (interaction.channel.id !== rolesChannel) {
       // Direct users to the rules channel
       await interaction.reply({
-        content: `Please go to <#${channels.rules}> to view the server rules.`,
+        content: `Please go to <#${rulesChannel}> to view the server rules.`,
         ephemeral: true,
       });
 
@@ -85,4 +85,4 @@ __`;
       ephemeral: true,
     });
   }
-);
+}

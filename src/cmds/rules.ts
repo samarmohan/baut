@@ -10,15 +10,12 @@ import { channels, embedMessages, media } from "../guild";
 import { checkMember } from "../util/checkMember";
 import { verifyAdmin } from "../util/verifyAdmin";
 
-@config("rules", { description: "Send the server rules. (Admin Only Command)" })
+@config("rules", {
+  description: "Send the server rules",
+  inhibitors: [verifyAdmin(), checkMember()],
+})
 export class RulesCommand extends Command {
   public async run(interaction: CommandInteraction) {
-    // Check if the user is a member and not a bot
-    checkMember(interaction);
-
-    // Check if the user is an admin
-    if (!verifyAdmin(interaction)) return;
-
     // Descructure constants
     const { rules, thankYou } = embedMessages;
 

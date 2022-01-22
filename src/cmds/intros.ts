@@ -1,33 +1,29 @@
 import { GuildMember, MessageEmbed } from "discord.js";
-import Command from "../structures/Command.js";
+import {
+  CommandInteraction,
+} from "discord.js";
+import { config, Command } from "@mammot/core";
 
-export default new Command(
-  {
-    name: "introduction",
-    description: "View the recommended template for your introduction",
-  },
-  async (client, interaction) => {
-    // Check if the type of user is a member
-    if (!(interaction.member instanceof GuildMember)) {
-      // Get the member
-      interaction.member = await interaction.guild.members.fetch(
-        interaction.user.id
-      );
-    }
-
-    // Descructure constants
-    const { channels, roles } = client.constants;
+@config("introduction", {
+  description: "View the recommended template for your introduction",
+})
+export class IntroCommand extends Command {
+  public async run(interaction: CommandInteraction) {
+    const introChannel = "913701412578418718";
+    const eligibleRole = "913766127451136002";
 
     // Check if the channel is the intro channel
-    if (interaction.channel.id !== channels.intros) {
+    if (interaction.channel.id !== introChannel) {
       // Check if the user has already written an introduction
-      const complete = interaction.member.roles.cache.has(roles.eligible);
+      const complete = (interaction.member as GuildMember).roles.cache.has(
+        eligibleRole
+      );
 
       // Direct users to the intro channel
       await interaction.reply({
         content: complete
-          ? `You can view everyone's introductions in <#${channels.intros}>`
-          : `Please go to <#${channels.intros}> to write your introduction.`,
+          ? `You can view everyone's introductions in <#${introChannel}>`
+          : `Please go to <#${introChannel}> to write your introduction.`,
         ephemeral: true,
       });
 
@@ -38,29 +34,29 @@ export default new Command(
     const introEmbed = new MessageEmbed()
       .setColor("#535061")
       .setTitle("Your Introduction").setDescription(`
-		In order to maintain consistency and include all necessary aspects of an intro, we recommend covering the following:
-
-		**Basics**
-		Mention your name, where you're located, and anything else you might want to add
-
-		**What you're working on**
-		List whatever you're building or creating at the moment
-
-		**What you use**
-		Mention the tools or technologies you work with on a daily basis
-
-		**Hobbies**
-		What you like to do in your free time
-
-		**Where people can find you**
-		Link your social media accounts
-
-		**Final Remarks**
-		Conclude your introduction with any final statements you might like to add.
-		`);
+        In order to maintain consistency and include all necessary aspects of an intro, we recommend covering the following:
+    
+        **Basics**
+        Mention your name, where you're located, and anything else you might want to add
+    
+        **What you're working on**
+        List whatever you're building or creating at the moment
+    
+        **What you use**
+        Mention the tools or technologies you work with on a daily basis
+    
+        **Hobbies**
+        What you like to do in your free time
+    
+        **Where people can find you**
+        Link your social media accounts
+    
+        **Final Remarks**
+        Conclude your introduction with any final statements you might like to add.
+     `);
 
     // Check if the user is an admin
-    if (interaction.member.permissions.has("ADMINISTRATOR")) {
+    if ((interaction.member as GuildMember).permissions.has("ADMINISTRATOR")) {
       // Send the embed
       await interaction.channel.send({ embeds: [introEmbed] });
       await interaction.reply({
@@ -75,4 +71,4 @@ export default new Command(
       });
     }
   }
-);
+}
