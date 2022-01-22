@@ -1,4 +1,12 @@
-import Client from "./structures/Client";
-import { token, clientOptions } from "./config";
+import { Mammot } from "@mammot/core";
+import { RulesCommand, PingCommand, IntroCommand, RolesCommand } from "./cmds";
+import { clientOptions } from "./config";
+import { token } from "./constants";
 
-new Client(clientOptions).login(token).catch(console.error);
+export const mammot = Mammot.client({
+  ...clientOptions,
+});
+
+mammot
+  .addCommands([RulesCommand, PingCommand, IntroCommand, RolesCommand])
+  .login(token);

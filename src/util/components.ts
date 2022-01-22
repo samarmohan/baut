@@ -4,7 +4,7 @@ import {
   MessageButton,
   MessageSelectMenu,
 } from "discord.js";
-import { constants } from "../config";
+import { constants } from "../config.js";
 
 const { roles } = constants;
 
