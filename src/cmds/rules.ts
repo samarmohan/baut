@@ -71,15 +71,15 @@ export class RulesCommand extends Command {
     // create the header image attachment
     const headerImage = new MessageAttachment(media.rulesHeaderImage);
 
-    // Send the embeds and action row
-    await interaction.reply({
-      content: "Rules posted!",
-      ephemeral: true,
-    });
+    // Send the embeds and social row
     await interaction.channel.send({
       files: [headerImage],
       embeds: [welcomeEmbed, rulesEmbed, infoEmbed],
       components: [socialRow],
+    });
+    await interaction.reply({
+      content: "Rules posted!",
+      ephemeral: true,
     });
   }
 }
