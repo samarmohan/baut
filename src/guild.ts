@@ -55,6 +55,8 @@ export const roles: Roles = {
   },
   eligible: "913766127451136002",
   not_eligible: "920144177818390649",
+
+  member: "913703107660230656",
 };
 
 export const channels = {

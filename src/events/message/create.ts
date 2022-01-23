@@ -11,7 +11,13 @@ export default new Event(
     if (message.author.bot) return;
 
     // Introductions channel only
-    message.channel.id === channels.intros && setEligible(message.member);
+    if (message.channel.id === channels.intros) {
+      try {
+        setEligible(message.member);
+      } catch (error) {
+        console.error(error);
+      }
+    }
 
     // Handle user eligibility
     async function setEligible(member: GuildMember) {
@@ -23,8 +29,14 @@ export default new Event(
       if (member.roles.cache.has(roles.eligible)) return;
 
       // Add the eligible role and remove the not eligible role
-      await member.roles.remove(notEligibleRole);
-      await member.roles.add(eligibleRole);
+      await member.roles.remove(
+        notEligibleRole,
+        `[User Into] Removed Not Eligible from ${member.user.tag}`
+      );
+      await member.roles.add(
+        eligibleRole,
+        `[User Into] Added Eligible to ${member.user.tag}`
+      );
     }
   }
 );

@@ -16,7 +16,6 @@ import { verifyAdmin } from "../util/verifyAdmin";
 })
 export class RulesCommand extends Command {
   public async run(interaction: CommandInteraction) {
-    // Descructure constants
     const { rules, thankYou } = embedMessages;
 
     // Check if the channel is the rules channel

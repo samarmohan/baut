@@ -6,6 +6,7 @@ export interface Roles {
   notifications: Notifications;
   eligible: string;
   not_eligible: string;
+  member: string;
 }
 
 export interface Experience {

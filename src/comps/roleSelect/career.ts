@@ -1,6 +1,7 @@
 import { GuildMember } from "discord.js";
 import { multi_select } from "../../util/editRoles";
 import Component from "../../structures/Component";
+import {roles} from "../../guild"
 
 export default new Component("career", async (client, interaction) => {
   // Check for component type
@@ -16,9 +17,6 @@ export default new Component("career", async (client, interaction) => {
 
   // Get the select menu options
   const options = interaction.values;
-
-  // Descructure constants
-  const { roles } = client.constants;
 
   // Update the roles
   multi_select(interaction.member, roles.career, options);

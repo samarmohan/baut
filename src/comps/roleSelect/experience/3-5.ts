@@ -1,6 +1,7 @@
 import { GuildMember } from "discord.js";
 import { single_select } from "../../../util/editRoles";
 import Component from "../../../structures/Component";
+import { roles } from "../../../guild"
 
 export default new Component("3-5", async (client, interaction) => {
   // Check for component type
@@ -13,9 +14,6 @@ export default new Component("3-5", async (client, interaction) => {
       interaction.user.id
     );
   }
-
-  // Descructure constants
-  const { roles } = client.constants;
 
   // Check if the user already has the role
   if (interaction.member.roles.cache.has(roles.experience["3-5"])) {
