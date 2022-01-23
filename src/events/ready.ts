@@ -5,7 +5,7 @@ export default new Event(
     name: "ready",
     once: true,
   },
-  async (client) => {
-    console.log(`[INFO] ${client.user.tag} is online!`);
+  async (mammot) => {
+    console.log(`[INFO] ${mammot.client.user} is online!`);
   }
 );
