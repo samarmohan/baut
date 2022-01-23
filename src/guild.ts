@@ -3,7 +3,7 @@ This file houses information such as ID's of specific entities (e.g roles, chann
 */
 
 import { EmbedMessages } from "./types";
-import { Roles } from "./types/rolesProd";
+import { Roles } from "./types/RolesProd";
 
 export const roles: Roles = {
   // Career
