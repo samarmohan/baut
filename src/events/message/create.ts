@@ -1,4 +1,5 @@
 import { GuildMember } from "discord.js";
+import { channels, roles } from "../../guild";
 import Event from "../../structures/Event";
 
 export default new Event(
@@ -8,9 +9,6 @@ export default new Event(
   async (client, message) => {
     // Ignore bots
     if (message.author.bot) return;
-
-    // Destructure the constants
-    const { roles, channels } = client.constants;
 
     // Introductions channel only
     message.channel.id === channels.intros && setEligible(message.member);
