@@ -1,3 +1,4 @@
+import { Mammot } from "@mammot/core";
 import {
   ChatInputApplicationCommandData,
   CommandInteraction,
@@ -17,7 +18,7 @@ export type CommandFunction = (
   interaction: CommandInteraction
 ) => void | Promise<void>;
 
-export type EventFunction = (client?: Client, ...args) => void | Promise<void>;
+export type EventFunction = (client?: Mammot, ...args) => void | Promise<void>;
 
 export type ComponentFunction = (
   client?: Client,
