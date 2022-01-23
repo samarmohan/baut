@@ -2,13 +2,14 @@ import { MammotOptions } from "@mammot/core";
 import { Intents } from "discord.js";
 
 export const clientOptions: MammotOptions = {
-  developmentGuild: process.env.DEVELOPMENT_GUILD_ID!,
+  developmentGuild: process.env.DEVELOPMENT_GUILD_ID,
   partials: ["CHANNEL", "MESSAGE", "REACTION", "USER", "GUILD_MEMBER"],
 
   intents: [
     Intents.FLAGS.GUILDS,
     Intents.FLAGS.GUILD_MESSAGES,
     Intents.FLAGS.DIRECT_MESSAGES,
+    Intents.FLAGS.GUILD_MEMBERS,
   ],
 
   allowedMentions: {

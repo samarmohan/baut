@@ -3,9 +3,9 @@ This file houses information such as ID's of specific entities (e.g roles, chann
 */
 
 import { EmbedMessages } from "./types";
-import { RolesProd } from "./types/RolesProd";
+import { Roles } from "./types/rolesProd";
 
-export const rolesProd: RolesProd = {
+export const roles: Roles = {
   // Career
   career: [
     "913789663767040001", // programming
@@ -55,9 +55,9 @@ export const rolesProd: RolesProd = {
   },
   eligible: "913766127451136002",
   not_eligible: "920144177818390649",
-};
 
-export const rolesDev = {};
+  member: "913703107660230656",
+};
 
 export const channels = {
   about: "913729308676202506",

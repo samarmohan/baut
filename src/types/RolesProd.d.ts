@@ -1,4 +1,4 @@
-export interface RolesProd {
+export interface Roles {
   career: string[];
   pronouns: Pronouns;
   location: Location;
@@ -6,6 +6,7 @@ export interface RolesProd {
   notifications: Notifications;
   eligible: string;
   not_eligible: string;
+  member: string;
 }
 
 export interface Experience {

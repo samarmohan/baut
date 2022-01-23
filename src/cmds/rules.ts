@@ -12,11 +12,10 @@ import { verifyAdmin } from "../util/verifyAdmin";
 
 @config("rules", {
   description: "Send the server rules",
-  inhibitors: [verifyAdmin(), checkMember()],
+  // inhibitors: [verifyAdmin(), checkMember()],
 })
 export class RulesCommand extends Command {
   public async run(interaction: CommandInteraction) {
-    // Descructure constants
     const { rules, thankYou } = embedMessages;
 
     // Check if the channel is the rules channel
