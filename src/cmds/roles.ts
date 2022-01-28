@@ -4,6 +4,20 @@ import {
   CommandInteraction,
   MessageAttachment,
 } from "discord.js";
+import {
+  careerSelectMenu,
+  experienceButtons,
+  locationSelectMenu,
+  notificationButtons,
+  pronounSelectMenu,
+} from "../util/components";
+import {
+  careerEmbed,
+  experienceEmbed,
+  locationEmbed,
+  notificationEmbed,
+  pronounsEmbed,
+} from "../util/embeds";
 import { config, Command } from "@mammot/core";
 import { verifyAdmin } from "../util/verifyAdmin";
 
@@ -14,73 +28,93 @@ import { verifyAdmin } from "../util/verifyAdmin";
 export class RolesCommand extends Command {
   public async run(interaction: CommandInteraction) {
     const rolesChannel = "934094517525676042";
-    const rulesChannel = "913669662649237564";
 
+    // Check if the channel is the roles channel
     if (interaction.channel.id !== rolesChannel) {
-      // Direct users to the rules channel
-      return await interaction.reply({
-        content: `Please go to <#${rulesChannel}> to view the server rules.`,
+      // Create category buttons
+      const categoryButtons = new MessageActionRow().addComponents(
+        new MessageButton()
+          .setLabel("Career")
+          .setStyle("SECONDARY")
+          .setEmoji("💼")
+          .setCustomId("careers"),
+        new MessageButton()
+          .setLabel("Location")
+          .setStyle("SECONDARY")
+          .setEmoji("🗺")
+          .setCustomId("location"),
+        new MessageButton()
+          .setLabel("Pronouns")
+          .setStyle("SECONDARY")
+          .setEmoji("🗣")
+          .setCustomId("pronouns"),
+        new MessageButton()
+          .setLabel("Experience")
+          .setStyle("SECONDARY")
+          .setEmoji("📊")
+          .setCustomId("experience"),
+        new MessageButton()
+          .setLabel("Notifications")
+          .setStyle("SECONDARY")
+          .setEmoji("🔔")
+          .setCustomId("notifications")
+      );
+
+      // Send the category buttons
+      await interaction.reply({
+        content: "Please select a category to view the avalible roles.",
+        components: [categoryButtons],
         ephemeral: true,
       });
+
+      return;
     }
 
     // Invisible divider
-    const divider = `
-__
-__`;
+    const divider = `_ _`;
 
     // Header image
     const headerImage = new MessageAttachment(
-      "https://cdn.discordapp.com/attachments/864826842707132446/931217059432525894/Roles_Poster.png"
-    );
-
-    // Create category buttons
-    const categoryButtons = new MessageActionRow().addComponents(
-      new MessageButton()
-        .setLabel("Career")
-        .setStyle("PRIMARY")
-        .setEmoji("🧑‍💼")
-        .setCustomId("careers"),
-      new MessageButton()
-        .setLabel("Location")
-        .setStyle("PRIMARY")
-        .setEmoji("✈️")
-        .setCustomId("location"),
-      new MessageButton()
-        .setLabel("Pronouns")
-        .setStyle("PRIMARY")
-        .setEmoji("💁")
-        .setCustomId("pronouns"),
-      new MessageButton()
-        .setLabel("Experience")
-        .setStyle("PRIMARY")
-        .setEmoji("📊")
-        .setCustomId("experience"),
-      new MessageButton()
-        .setLabel("Notifications")
-        .setStyle("PRIMARY")
-        .setEmoji("🔔")
-        .setCustomId("notifications")
+      "https://media.discordapp.net/attachments/913709531442315324/916712730713534494/Roles_Poster.png"
     );
 
     // Send career embed and select menu
     await interaction.channel.send({
       files: [headerImage],
+      embeds: [careerEmbed],
+      components: [careerSelectMenu()],
     });
 
-    // send invisible divider
+    // Send location embed and select menu
     await interaction.channel.send({
       content: divider,
+      embeds: [locationEmbed],
+      components: [locationSelectMenu()],
     });
 
-    // Send the category buttons
+    // Send pronouns embed and select menu
     await interaction.channel.send({
-      content: `**Please select a category to view the available roles.** _ _`,
-      components: [categoryButtons],
+      content: divider,
+      embeds: [pronounsEmbed],
+      components: [pronounSelectMenu()],
+    });
+
+    // Send experience embed and buttons
+    await interaction.channel.send({
+      content: divider,
+      embeds: [experienceEmbed],
+      components: [experienceButtons],
+    });
+
+    // Send notifications embed and buttons
+    await interaction.channel.send({
+      content: divider,
+      embeds: [notificationEmbed],
+      components: [notificationButtons],
     });
 
     await interaction.reply({
-      content: "Sent roles message",
+      content: "Roles message posted!",
       ephemeral: true,
     });
   }
