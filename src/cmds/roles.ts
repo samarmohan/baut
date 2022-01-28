@@ -29,47 +29,6 @@ export class RolesCommand extends Command {
   public async run(interaction: CommandInteraction) {
     const rolesChannel = "934094517525676042";
 
-    // Check if the channel is the roles channel
-    if (interaction.channel.id !== rolesChannel) {
-      // Create category buttons
-      const categoryButtons = new MessageActionRow().addComponents(
-        new MessageButton()
-          .setLabel("Career")
-          .setStyle("SECONDARY")
-          .setEmoji("💼")
-          .setCustomId("careers"),
-        new MessageButton()
-          .setLabel("Location")
-          .setStyle("SECONDARY")
-          .setEmoji("🗺")
-          .setCustomId("location"),
-        new MessageButton()
-          .setLabel("Pronouns")
-          .setStyle("SECONDARY")
-          .setEmoji("🗣")
-          .setCustomId("pronouns"),
-        new MessageButton()
-          .setLabel("Experience")
-          .setStyle("SECONDARY")
-          .setEmoji("📊")
-          .setCustomId("experience"),
-        new MessageButton()
-          .setLabel("Notifications")
-          .setStyle("SECONDARY")
-          .setEmoji("🔔")
-          .setCustomId("notifications")
-      );
-
-      // Send the category buttons
-      await interaction.reply({
-        content: "Please select a category to view the avalible roles.",
-        components: [categoryButtons],
-        ephemeral: true,
-      });
-
-      return;
-    }
-
     // Invisible divider
     const divider = `_ _`;
 
