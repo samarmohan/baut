@@ -1,13 +1,13 @@
-import { Mammot } from "@mammot/core";
+import { Mammot } from '@mammot/core';
 import {
-  ChatInputApplicationCommandData,
-  CommandInteraction,
-  ApplicationCommandPermissionData,
-  MessageComponentInteraction,
-  SelectMenuInteraction,
-  ButtonInteraction,
-} from "discord.js";
-import Client from "../structures/Client.js";
+	ChatInputApplicationCommandData,
+	CommandInteraction,
+	ApplicationCommandPermissionData,
+	MessageComponentInteraction,
+	SelectMenuInteraction,
+	ButtonInteraction,
+} from 'discord.js';
+import Client from '../structures/Client.js';
 
 export interface CommandOptions extends ChatInputApplicationCommandData {
   permissions?: ApplicationCommandPermissionData[];

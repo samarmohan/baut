@@ -1,80 +1,90 @@
-import {
-  MessageActionRow,
-  MessageButton,
-  CommandInteraction,
-  MessageAttachment,
-} from "discord.js";
-import {
-  careerSelectMenu,
-  experienceButtons,
-  locationSelectMenu,
-  notificationButtons,
-  pronounSelectMenu,
-} from "../util/components";
-import {
-  careerEmbed,
-  experienceEmbed,
-  locationEmbed,
-  notificationEmbed,
-  pronounsEmbed,
-} from "../util/embeds";
-import { config, Command } from "@mammot/core";
-import { verifyAdmin } from "../util/verifyAdmin";
+import { MessageActionRow, MessageButton, CommandInteraction, MessageAttachment } from 'discord.js';
+import { config, Command } from '@mammot/core';
+import { verifyAdmin } from '../util/verifyAdmin';
 
-@config("roles", {
-  description: "Select your self-assigned roles (Admin Only Command)",
-  inhibitors: [verifyAdmin()],
+@config('roles', {
+	description: 'Select your self-assigned roles (Admin Only Command)',
+	inhibitors: [verifyAdmin()],
 })
 export class RolesCommand extends Command {
-  public async run(interaction: CommandInteraction) {
-    const rolesChannel = "934094517525676042";
+	public async run(interaction: CommandInteraction) {
+		const rolesChannel = '929317788659621889';
 
-    // Invisible divider
-    const divider = `_ _`;
+		if (interaction.channel.id !== rolesChannel) {
+			// Direct users to the rules channel
+			return await interaction.reply({
+				content: `Please go to <#${rolesChannel}> to send the server roles.`,
+				ephemeral: true,
+			});
+		}
 
-    // Header image
-    const headerImage = new MessageAttachment(
-      "https://media.discordapp.net/attachments/913709531442315324/916712730713534494/Roles_Poster.png"
-    );
+		// Invisible divider
+		const divider = `
+__
+__`;
 
-    // Send career embed and select menu
-    await interaction.channel.send({
-      files: [headerImage],
-      embeds: [careerEmbed],
-      components: [careerSelectMenu()],
-    });
+		// Header image
+		const headerImage = new MessageAttachment(
+			'https://cdn.discordapp.com/attachments/864826842707132446/931217059432525894/Roles_Poster.png'
+		);
 
-    // Send location embed and select menu
-    await interaction.channel.send({
-      content: divider,
-      embeds: [locationEmbed],
-      components: [locationSelectMenu()],
-    });
+		// Create category buttons
+		const categoryButtons = new MessageActionRow().addComponents(
+			new MessageButton().setLabel('Career').setStyle('PRIMARY').setEmoji('🧑‍💼').setCustomId('careers'),
+			new MessageButton().setLabel('Location').setStyle('PRIMARY').setEmoji('✈️').setCustomId('location'),
+			new MessageButton().setLabel('Pronouns').setStyle('PRIMARY').setEmoji('💁').setCustomId('pronouns'),
+			new MessageButton().setLabel('Experience').setStyle('PRIMARY').setEmoji('📊').setCustomId('experience'),
+			new MessageButton()
+				.setLabel('Notifications')
+				.setStyle('PRIMARY')
+				.setEmoji('🔔')
+				.setCustomId('notifications')
+		);
 
-    // Send pronouns embed and select menu
-    await interaction.channel.send({
-      content: divider,
-      embeds: [pronounsEmbed],
-      components: [pronounSelectMenu()],
-    });
+		// Send career embed and select menu
+		await interaction.channel.send({
+			files: [headerImage],
+		});
 
-    // Send experience embed and buttons
-    await interaction.channel.send({
-      content: divider,
-      embeds: [experienceEmbed],
-      components: [experienceButtons],
-    });
+		// Check button if was clicked if clicked return text
 
-    // Send notifications embed and buttons
-    await interaction.channel.send({
-      content: divider,
-      embeds: [notificationEmbed],
-      components: [notificationButtons],
-    });
+		const collector = interaction.channel.createMessageComponentCollector({ time: 15000 });
+		collector.on('collect', async (i) => {
+			if (i.customId === 'notifications') {
+				await i.deferUpdate();
+				await i.followUp({ content: 'notifications', components: [], ephemeral: true });
+			} else if (i.customId === 'location') {
+				await i.deferUpdate();
+				await i.followUp({ content: 'location', components: [], ephemeral: true });
+			} else if (i.customId === 'pronouns') {
+				await i.deferUpdate();
+				await i.followUp({ content: 'pronouns', components: [], ephemeral: true });
+			} else if (i.customId === 'experience') {
+				await i.deferUpdate();
+				await i.followUp({ content: 'experience', components: [], ephemeral: true });
+			} else if (i.customId === 'careers') {
+				await i.deferUpdate();
+				await i.followUp({ content: 'careers', components: [], ephemeral: true });
+			} else {
+				return;
+			}
+		});
 
-    await interaction.reply({
-      content: "Roles message posted!",
-      ephemeral: true,
-    });
-  }
+		// send invisible divider
+		await interaction.channel.send({
+			content: divider,
+		});
+
+		// Send the category buttons
+		await interaction.channel.send({
+			content: '**Please select a category to view the available roles.** _ _',
+			components: [categoryButtons],
+		});
+
+		await interaction.reply({
+			content: 'Sent roles message',
+			ephemeral: true,
+		});
+	}
+
 }
