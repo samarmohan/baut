@@ -26,6 +26,6 @@ export const notificationEmbed = new MessageEmbed()
 
 export const pronounsEmbed = new MessageEmbed()
 	.setTitle('What are your pronouns?')
-	.setDescription("Select your pronouns (Skip if you'd rather not disclose).")
+	.setDescription('Select your pronouns (Skip if you\'d rather not disclose).')
 	.setColor('#535061')
 	.setFooter('Single / Multi Select');

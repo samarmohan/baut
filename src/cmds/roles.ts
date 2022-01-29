@@ -1,21 +1,14 @@
-import {
-	MessageActionRow,
-	MessageButton,
-	CommandInteraction,
-	MessageAttachment,
-	Collector,
-	Message,
-} from "discord.js";
-import { config, Command } from "@mammot/core";
-import { verifyAdmin } from "../util/verifyAdmin";
+import { MessageActionRow, MessageButton, CommandInteraction, MessageAttachment } from 'discord.js';
+import { config, Command } from '@mammot/core';
+import { verifyAdmin } from '../util/verifyAdmin';
 
-@config("roles", {
-	description: "Select your self-assigned roles (Admin Only Command)",
+@config('roles', {
+	description: 'Select your self-assigned roles (Admin Only Command)',
 	inhibitors: [verifyAdmin()],
 })
 export class RolesCommand extends Command {
 	public async run(interaction: CommandInteraction) {
-		const rolesChannel = "929317788659621889";
+		const rolesChannel = '929317788659621889';
 
 		if (interaction.channel.id !== rolesChannel) {
 			// Direct users to the rules channel
@@ -32,36 +25,20 @@ __`;
 
 		// Header image
 		const headerImage = new MessageAttachment(
-			"https://cdn.discordapp.com/attachments/864826842707132446/931217059432525894/Roles_Poster.png"
+			'https://cdn.discordapp.com/attachments/864826842707132446/931217059432525894/Roles_Poster.png'
 		);
 
 		// Create category buttons
 		const categoryButtons = new MessageActionRow().addComponents(
+			new MessageButton().setLabel('Career').setStyle('PRIMARY').setEmoji('🧑‍💼').setCustomId('careers'),
+			new MessageButton().setLabel('Location').setStyle('PRIMARY').setEmoji('✈️').setCustomId('location'),
+			new MessageButton().setLabel('Pronouns').setStyle('PRIMARY').setEmoji('💁').setCustomId('pronouns'),
+			new MessageButton().setLabel('Experience').setStyle('PRIMARY').setEmoji('📊').setCustomId('experience'),
 			new MessageButton()
-				.setLabel("Career")
-				.setStyle("PRIMARY")
-				.setEmoji("🧑‍💼")
-				.setCustomId("careers"),
-			new MessageButton()
-				.setLabel("Location")
-				.setStyle("PRIMARY")
-				.setEmoji("✈️")
-				.setCustomId("location"),
-			new MessageButton()
-				.setLabel("Pronouns")
-				.setStyle("PRIMARY")
-				.setEmoji("💁")
-				.setCustomId("pronouns"),
-			new MessageButton()
-				.setLabel("Experience")
-				.setStyle("PRIMARY")
-				.setEmoji("📊")
-				.setCustomId("experience"),
-			new MessageButton()
-				.setLabel("Notifications")
-				.setStyle("PRIMARY")
-				.setEmoji("🔔")
-				.setCustomId("notifications")
+				.setLabel('Notifications')
+				.setStyle('PRIMARY')
+				.setEmoji('🔔')
+				.setCustomId('notifications')
 		);
 
 		// Send career embed and select menu
@@ -72,22 +49,22 @@ __`;
 		// Check button if was clicked if clicked return text
 
 		const collector = interaction.channel.createMessageComponentCollector({ time: 15000 });
-		collector.on("collect", async i => {
-			if (i.customId === "notifications") {
+		collector.on('collect', async (i) => {
+			if (i.customId === 'notifications') {
 				await i.deferUpdate();
-				await i.followUp({ content: "notifications", components: [], ephemeral: true });
-			} else if (i.customId === "location") {
+				await i.followUp({ content: 'notifications', components: [], ephemeral: true });
+			} else if (i.customId === 'location') {
 				await i.deferUpdate();
-				await i.followUp({ content: "location", components: [], ephemeral: true });
-			} else if (i.customId === "pronouns") {
+				await i.followUp({ content: 'location', components: [], ephemeral: true });
+			} else if (i.customId === 'pronouns') {
 				await i.deferUpdate();
-				await i.followUp({ content: "pronouns", components: [], ephemeral: true });
-			} else if (i.customId === "experience") {
+				await i.followUp({ content: 'pronouns', components: [], ephemeral: true });
+			} else if (i.customId === 'experience') {
 				await i.deferUpdate();
-				await i.followUp({ content: "experience", components: [], ephemeral: true });
-			} else if (i.customId === "careers") {
+				await i.followUp({ content: 'experience', components: [], ephemeral: true });
+			} else if (i.customId === 'careers') {
 				await i.deferUpdate();
-				await i.followUp({ content: "careers", components: [], ephemeral: true });
+				await i.followUp({ content: 'careers', components: [], ephemeral: true });
 			} else {
 				return;
 			}
@@ -100,12 +77,12 @@ __`;
 
 		// Send the category buttons
 		await interaction.channel.send({
-			content: `**Please select a category to view the available roles.** _ _`,
+			content: '**Please select a category to view the available roles.** _ _',
 			components: [categoryButtons],
 		});
 
 		await interaction.reply({
-			content: "Sent roles message",
+			content: 'Sent roles message',
 			ephemeral: true,
 		});
 	}

@@ -10,10 +10,10 @@ export interface Roles {
 }
 
 export interface Experience {
-  "1-2": string;
-  "3-5": string;
-  "6-8": string;
-  "9+": string;
+  '1-2': string;
+  '3-5': string;
+  '6-8': string;
+  '9+': string;
 }
 
 export interface Location {
