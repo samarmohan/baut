@@ -64,10 +64,6 @@ __`;
 			files: [headerImage],
 		});
 
-<<<<<<< HEAD
-=======
-		// Check button if was clicked if clicked return text
-
 		const collector = interaction.channel.createMessageComponentCollector({
 			time: 15000,
 		});
@@ -112,7 +108,6 @@ __`;
 			}
 		});
 
->>>>>>> 186d993 (feat: remove admin check)
 		// send invisible divider
 		await interaction.channel.send({
 			content: divider,
