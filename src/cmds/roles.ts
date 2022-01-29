@@ -64,50 +64,6 @@ __`;
 			files: [headerImage],
 		});
 
-		const collector = interaction.channel.createMessageComponentCollector({
-			time: 15000,
-		});
-		collector.on('collect', async (i) => {
-			if (i.customId === 'notifications') {
-				await i.deferUpdate();
-				await i.followUp({
-					content: 'notifications',
-					components: [],
-					ephemeral: true,
-				});
-			} else if (i.customId === 'location') {
-				await i.deferUpdate();
-				await i.followUp({
-					content: 'location',
-					components: [],
-					ephemeral: true,
-				});
-			} else if (i.customId === 'pronouns') {
-				await i.deferUpdate();
-				await i.followUp({
-					content: 'pronouns',
-					components: [],
-					ephemeral: true,
-				});
-			} else if (i.customId === 'experience') {
-				await i.deferUpdate();
-				await i.followUp({
-					content: 'experience',
-					components: [],
-					ephemeral: true,
-				});
-			} else if (i.customId === 'careers') {
-				await i.deferUpdate();
-				await i.followUp({
-					content: 'careers',
-					components: [],
-					ephemeral: true,
-				});
-			} else {
-				return;
-			}
-		});
-
 		// send invisible divider
 		await interaction.channel.send({
 			content: divider,
