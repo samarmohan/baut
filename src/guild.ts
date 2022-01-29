@@ -98,5 +98,5 @@ export const embedMessages: EmbedMessages = {
 
 export const media = {
 	rulesHeaderImage:
-    'https://media.discordapp.net/attachments/913702607510466651/913877293619904613/Rules_And_Info.png',
+		'https://media.discordapp.net/attachments/913702607510466651/913877293619904613/Rules_And_Info.png',
 };

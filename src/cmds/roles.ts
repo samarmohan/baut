@@ -1,4 +1,9 @@
-import { MessageActionRow, MessageButton, CommandInteraction, MessageAttachment } from 'discord.js';
+import {
+	MessageActionRow,
+	MessageButton,
+	CommandInteraction,
+	MessageAttachment,
+} from 'discord.js';
 import { config, Command } from '@mammot/core';
 import { verifyAdmin } from '../util/verifyAdmin';
 
@@ -30,10 +35,26 @@ __`;
 
 		// Create category buttons
 		const categoryButtons = new MessageActionRow().addComponents(
-			new MessageButton().setLabel('Career').setStyle('PRIMARY').setEmoji('🧑‍💼').setCustomId('careers'),
-			new MessageButton().setLabel('Location').setStyle('PRIMARY').setEmoji('✈️').setCustomId('location'),
-			new MessageButton().setLabel('Pronouns').setStyle('PRIMARY').setEmoji('💁').setCustomId('pronouns'),
-			new MessageButton().setLabel('Experience').setStyle('PRIMARY').setEmoji('📊').setCustomId('experience'),
+			new MessageButton()
+				.setLabel('Career')
+				.setStyle('PRIMARY')
+				.setEmoji('🧑‍💼')
+				.setCustomId('careers'),
+			new MessageButton()
+				.setLabel('Location')
+				.setStyle('PRIMARY')
+				.setEmoji('✈️')
+				.setCustomId('location'),
+			new MessageButton()
+				.setLabel('Pronouns')
+				.setStyle('PRIMARY')
+				.setEmoji('💁')
+				.setCustomId('pronouns'),
+			new MessageButton()
+				.setLabel('Experience')
+				.setStyle('PRIMARY')
+				.setEmoji('📊')
+				.setCustomId('experience'),
 			new MessageButton()
 				.setLabel('Notifications')
 				.setStyle('PRIMARY')
@@ -46,30 +67,6 @@ __`;
 			files: [headerImage],
 		});
 
-		// Check button if was clicked if clicked return text
-
-		const collector = interaction.channel.createMessageComponentCollector({ time: 15000 });
-		collector.on('collect', async (i) => {
-			if (i.customId === 'notifications') {
-				await i.deferUpdate();
-				await i.followUp({ content: 'notifications', components: [], ephemeral: true });
-			} else if (i.customId === 'location') {
-				await i.deferUpdate();
-				await i.followUp({ content: 'location', components: [], ephemeral: true });
-			} else if (i.customId === 'pronouns') {
-				await i.deferUpdate();
-				await i.followUp({ content: 'pronouns', components: [], ephemeral: true });
-			} else if (i.customId === 'experience') {
-				await i.deferUpdate();
-				await i.followUp({ content: 'experience', components: [], ephemeral: true });
-			} else if (i.customId === 'careers') {
-				await i.deferUpdate();
-				await i.followUp({ content: 'careers', components: [], ephemeral: true });
-			} else {
-				return;
-			}
-		});
-
 		// send invisible divider
 		await interaction.channel.send({
 			content: divider,
@@ -77,7 +74,8 @@ __`;
 
 		// Send the category buttons
 		await interaction.channel.send({
-			content: '**Please select a category to view the available roles.** _ _',
+			content:
+				'**Please select a category to view the available roles.** _ _',
 			components: [categoryButtons],
 		});
 
@@ -86,5 +84,4 @@ __`;
 			ephemeral: true,
 		});
 	}
-
 }
