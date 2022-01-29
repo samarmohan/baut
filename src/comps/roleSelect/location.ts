@@ -22,7 +22,11 @@ export default new Component(
 		const options = interaction.values;
 
 		// Update the roles
-		single_select(interaction.member, roles.location, options[0]);
+		await single_select(
+			interaction.member,
+			roles.location,
+			options[0]
+		).catch(console.error);
 
 		// Send the confirmation message
 		await interaction.editReply({

@@ -6,11 +6,11 @@ import { GuildMember } from 'discord.js';
  * @param {string[]|object} available The available roles
  * @param {string[]} selected The selected roles
  */
-export function multi_select(
+export async function multi_select(
 	member: GuildMember,
 	available: string[] | object,
 	selected: string[]
-): void {
+): Promise<void> {
 	// Check for array or object
 	if (Array.isArray(available)) {
 		// Loop through the available roles array
@@ -18,10 +18,13 @@ export function multi_select(
 			// Check if the role is selected
 			if (member.roles.cache.has(role) && !selected.includes(role)) {
 				// Remove the role
-				member.roles.remove(selected);
-			} else if (!member.roles.cache.has(role) && selected.includes(role)) {
+				await member.roles.remove(selected);
+			} else if (
+				!member.roles.cache.has(role) &&
+				selected.includes(role)
+			) {
 				// Add the role
-				member.roles.add(selected);
+				await member.roles.add(selected);
 			}
 		}
 	} else {
@@ -30,16 +33,16 @@ export function multi_select(
 			// Check if the role is selected
 			if (
 				member.roles.cache.has(id) &&
-        (!selected.includes(role) || !selected.includes(id))
+				(!selected.includes(role) || !selected.includes(id))
 			) {
 				// Remove the role
-				member.roles.remove(id);
+				await member.roles.remove(id);
 			} else if (
 				!member.roles.cache.has(id) &&
-        (selected.includes(role) || selected.includes(id))
+				(selected.includes(role) || selected.includes(id))
 			) {
 				// Add the role
-				member.roles.add(id);
+				await member.roles.add(id);
 			}
 		}
 	}
@@ -51,11 +54,11 @@ export function multi_select(
  * @param {string[]|object} available The available roles
  * @param {string} selected The selected role
  */
-export function single_select(
+export async function single_select(
 	member: GuildMember,
 	available: string[] | object,
 	selected: string
-): void {
+): Promise<void> {
 	// Check for array or object
 	if (Array.isArray(available)) {
 		// Loop through the available roles array
@@ -63,10 +66,10 @@ export function single_select(
 			// Check if the role is selected
 			if (member.roles.cache.has(role) && role !== selected) {
 				// Remove the role
-				member.roles.remove(selected);
+				await member.roles.remove(selected);
 			} else if (!member.roles.cache.has(selected) && role === selected) {
 				// Add the role
-				member.roles.add(selected);
+				await member.roles.add(selected);
 			}
 		}
 	} else {
@@ -75,16 +78,16 @@ export function single_select(
 			// Check if the role is selected
 			if (
 				member.roles.cache.has(id) &&
-        (id !== selected || role !== selected)
+				(id !== selected || role !== selected)
 			) {
 				// Remove the role
-				member.roles.remove(id);
+				await member.roles.remove(id);
 			} else if (
 				!member.roles.cache.has(id) &&
-        (id === selected || role === selected)
+				(id === selected || role === selected)
 			) {
 				// Add the role
-				member.roles.add(id);
+				await member.roles.add(id);
 			}
 		}
 	}
@@ -96,15 +99,18 @@ export function single_select(
  * @param selected The role to toggle
  * @returns
  */
-export function toggle_select(member: GuildMember, selected: string): boolean {
+export async function toggle_select(
+	member: GuildMember,
+	selected: string
+): Promise<boolean> {
 	// Check if the role is selected
 	if (member.roles.cache.has(selected)) {
 		// Remove the role
-		member.roles.remove(selected);
+		await member.roles.remove(selected);
 		return false;
 	} else {
 		// Add the role
-		member.roles.add(selected);
+		await member.roles.add(selected);
 		return true;
 	}
 }

@@ -1,6 +1,7 @@
 import { GuildMember } from 'discord.js';
 import { toggle_select } from '../../../util/editRoles';
 import Component from '../../../structures/Component';
+import { roles } from '../../../guild';
 
 export default new Component(
 	'poll_ping',
@@ -18,7 +19,13 @@ export default new Component(
 		}
 
 		// Toggle the role
-		const change = toggle_select(interaction.member, interaction.customId);
+		const change = await toggle_select(
+			interaction.member,
+			roles.notifications['poll_ping']
+		).catch((e) => {
+			console.error(e);
+			return true;
+		});
 
 		// Send the confirmation message
 		await interaction.editReply({

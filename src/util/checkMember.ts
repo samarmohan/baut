@@ -1,5 +1,5 @@
 import { Inhibitor } from '@mammot/core';
-import { CacheType, CommandInteraction, GuildMember } from 'discord.js';
+import { GuildMember } from 'discord.js';
 
 /** Check if the type of user is a member */
 export function checkMember(): Inhibitor {

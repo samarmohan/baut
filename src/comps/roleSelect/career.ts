@@ -19,7 +19,9 @@ export default new Component('career', false, async (client, interaction) => {
 	const options = interaction.values;
 
 	// Update the roles
-	multi_select(interaction.member, roles.career, options);
+	await multi_select(interaction.member, roles.career, options).catch(
+		console.error
+	);
 
 	// Send the confirmation message
 	await interaction.editReply({

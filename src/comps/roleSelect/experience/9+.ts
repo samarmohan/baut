@@ -26,7 +26,11 @@ export default new Component('9+', false, async (client, interaction) => {
 	}
 
 	// Update the roles
-	single_select(interaction.member, roles.experience, interaction.customId);
+	await single_select(
+		interaction.member,
+		roles.experience,
+		interaction.customId
+	).catch(console.error);
 
 	// Send the confirmation message
 	await interaction.editReply({

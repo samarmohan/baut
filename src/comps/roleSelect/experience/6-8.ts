@@ -3,7 +3,7 @@ import { single_select } from '../../../util/editRoles';
 import Component from '../../../structures/Component';
 import { roles } from '../../../guild';
 
-export default new Component('6-8', false,async (client, interaction) => {
+export default new Component('6-8', false, async (client, interaction) => {
 	// Check for component type
 	if (!interaction.isButton()) return;
 
@@ -26,7 +26,11 @@ export default new Component('6-8', false,async (client, interaction) => {
 	}
 
 	// Update the roles
-	single_select(interaction.member, roles.experience, interaction.customId);
+	await single_select(
+		interaction.member,
+		roles.experience,
+		interaction.customId
+	).catch(console.error);
 
 	// Send the confirmation message
 	await interaction.editReply({
