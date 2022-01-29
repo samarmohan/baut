@@ -25,9 +25,8 @@ export default new Component(
 		multi_select(interaction.member, roles.career, options);
 
 		// Send the confirmation message
-		await interaction.reply({
+		await interaction.editReply({
 			content: 'Your pronouns have been updated.',
-			ephemeral: true,
 		});
 	}
 );
