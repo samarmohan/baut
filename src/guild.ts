@@ -60,10 +60,10 @@ export const roles: Roles = {
 };
 
 export const channels = {
-	about: '913729308676202506',
+	about: '913669662649237564',
 	intros: '913701412578418718',
 	rules: '913669662649237564',
-	roles: '913709531442315324',
+	roles: '934094517525676042',
 };
 
 export const embedMessages: EmbedMessages = {
