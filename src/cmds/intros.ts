@@ -18,7 +18,7 @@ export class IntroCommand extends Command {
 			// Direct users to the intro channel
 			await interaction.reply({
 				content: complete
-					? `You can view everyone's introductions in <#${channels.introsl}>`
+					? `You can view everyone's introductions in <#${channels.intros}>`
 					: `Please go to <#${channels.intros}> to write your introduction.`,
 				ephemeral: true,
 			});
