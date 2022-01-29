@@ -8,7 +8,7 @@ import { Roles } from './types/RolesProd';
 export const roles: Roles = {
 	// Career
 	career: [
-		'931513769471930398', // programming
+		'913789663767040001', // programming
 		'913791003633266729', // design
 		'913791069378990100', // entrepreneurship
 		'933713452285960213', // web3
@@ -63,7 +63,7 @@ export const channels = {
 	about: '913729308676202506',
 	intros: '913701412578418718',
 	rules: '913669662649237564',
-	roles: '929317788659621889',
+	roles: '913709531442315324',
 };
 
 export const embedMessages: EmbedMessages = {
