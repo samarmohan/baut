@@ -73,6 +73,7 @@ export async function loadComponents(
 			continue;
 		}
 
+		// @ts-expect-error yeah
 		client.components.set(component.id, component);
 		console.log(`Loaded component ${component.id}`);
 	}

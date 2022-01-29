@@ -8,12 +8,12 @@ import { Collection } from 'discord.js';
 
 dotenv.config();
 
-// @ts-expect-error bruh
 export const mammot = Mammot.client({
 	...clientOptions,
-}) as Mammot;
+});
 
 async function boot() {
+	// @ts-expect-error yeah
 	mammot.components = new Collection();
 	await loadComponents(mammot, 'src/comps');
 	mammot.addCommands([RulesCommand, PingCommand, IntroCommand, RolesCommand]);

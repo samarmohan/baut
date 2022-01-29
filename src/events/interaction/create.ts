@@ -30,6 +30,7 @@ export default new Event(
 			interaction.isSelectMenu() ||
 			interaction.isButton()
 		) {
+			// @ts-expect-error yeah
 			const comp = mammot.components.get(interaction.customId);
 
 			// if not in collection return
