@@ -7,8 +7,6 @@ import {
 	MessageEmbed,
 } from 'discord.js';
 import { channels, embedMessages, media } from '../guild';
-import { checkMember } from '../util/checkMember';
-import { verifyAdmin } from '../util/verifyAdmin';
 
 @config('rules', {
 	description: 'Send the server rules',
@@ -34,7 +32,7 @@ export class RulesCommand extends Command {
 			.setColor('#FFFFFF')
 			.setTitle('Welcome To Buildergroop!')
 			.setDescription(
-				'We\'re a diverse and open community of ambitious gen-z builders, striving to build a better future.'
+				"We're a diverse and open community of ambitious gen-z builders, striving to build a better future."
 			);
 
 		// Create the rules embed

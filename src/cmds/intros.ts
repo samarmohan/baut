@@ -1,29 +1,25 @@
 import { GuildMember, MessageEmbed } from 'discord.js';
-import {
-	CommandInteraction,
-} from 'discord.js';
+import { CommandInteraction } from 'discord.js';
 import { config, Command } from '@mammot/core';
+import { channels, roles } from '../guild';
 
 @config('introduction', {
 	description: 'View the recommended template for your introduction',
 })
 export class IntroCommand extends Command {
 	public async run(interaction: CommandInteraction) {
-		const introChannel = '913701412578418718';
-		const eligibleRole = '913766127451136002';
-
 		// Check if the channel is the intro channel
-		if (interaction.channel.id !== introChannel) {
+		if (interaction.channel.id !== channels.intros) {
 			// Check if the user has already written an introduction
-			const complete = (interaction.member as GuildMember).roles.cache.has(
-				eligibleRole
-			);
+			const complete = (
+				interaction.member as GuildMember
+			).roles.cache.has(roles.eligible);
 
 			// Direct users to the intro channel
 			await interaction.reply({
 				content: complete
-					? `You can view everyone's introductions in <#${introChannel}>`
-					: `Please go to <#${introChannel}> to write your introduction.`,
+					? `You can view everyone's introductions in <#${channels.introsl}>`
+					: `Please go to <#${channels.intros}> to write your introduction.`,
 				ephemeral: true,
 			});
 
@@ -56,7 +52,9 @@ export class IntroCommand extends Command {
      `);
 
 		// Check if the user is an admin
-		if ((interaction.member as GuildMember).permissions.has('ADMINISTRATOR')) {
+		if (
+			(interaction.member as GuildMember).permissions.has('ADMINISTRATOR')
+		) {
 			// Send the embed
 			await interaction.channel.send({ embeds: [introEmbed] });
 			await interaction.reply({

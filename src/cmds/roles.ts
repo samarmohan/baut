@@ -5,20 +5,17 @@ import {
 	MessageAttachment,
 } from 'discord.js';
 import { config, Command } from '@mammot/core';
-import { verifyAdmin } from '../util/verifyAdmin';
+import { channels } from '../guild';
 
 @config('roles', {
 	description: 'Select your self-assigned roles (Admin Only Command)',
-	inhibitors: [verifyAdmin()],
 })
 export class RolesCommand extends Command {
 	public async run(interaction: CommandInteraction) {
-		const rolesChannel = '929317788659621889';
-
-		if (interaction.channel.id !== rolesChannel) {
+		if (interaction.channel.id !== channels.roles) {
 			// Direct users to the rules channel
 			return await interaction.reply({
-				content: `Please go to <#${rolesChannel}> to send the server roles.`,
+				content: `Please go to <#${channels.roles}> to send the server roles.`,
 				ephemeral: true,
 			});
 		}
@@ -67,6 +64,55 @@ __`;
 			files: [headerImage],
 		});
 
+<<<<<<< HEAD
+=======
+		// Check button if was clicked if clicked return text
+
+		const collector = interaction.channel.createMessageComponentCollector({
+			time: 15000,
+		});
+		collector.on('collect', async (i) => {
+			if (i.customId === 'notifications') {
+				await i.deferUpdate();
+				await i.followUp({
+					content: 'notifications',
+					components: [],
+					ephemeral: true,
+				});
+			} else if (i.customId === 'location') {
+				await i.deferUpdate();
+				await i.followUp({
+					content: 'location',
+					components: [],
+					ephemeral: true,
+				});
+			} else if (i.customId === 'pronouns') {
+				await i.deferUpdate();
+				await i.followUp({
+					content: 'pronouns',
+					components: [],
+					ephemeral: true,
+				});
+			} else if (i.customId === 'experience') {
+				await i.deferUpdate();
+				await i.followUp({
+					content: 'experience',
+					components: [],
+					ephemeral: true,
+				});
+			} else if (i.customId === 'careers') {
+				await i.deferUpdate();
+				await i.followUp({
+					content: 'careers',
+					components: [],
+					ephemeral: true,
+				});
+			} else {
+				return;
+			}
+		});
+
+>>>>>>> 186d993 (feat: remove admin check)
 		// send invisible divider
 		await interaction.channel.send({
 			content: divider,
