@@ -18,9 +18,8 @@ export default new Component('9+', false, async (client, interaction) => {
 	// Check if the user already has the role
 	if (interaction.member.roles.cache.has(roles.experience['3-5'])) {
 		// Send the "already has role" message
-		await interaction.reply({
+		await interaction.editReply({
 			content: 'Your experience is already set to **9+ years**.',
-			ephemeral: true,
 		});
 
 		return;
@@ -30,8 +29,7 @@ export default new Component('9+', false, async (client, interaction) => {
 	single_select(interaction.member, roles.experience, interaction.customId);
 
 	// Send the confirmation message
-	await interaction.reply({
+	await interaction.editReply({
 		content: 'Set your experience to **9+ years**.',
-		ephemeral: true,
 	});
 });
