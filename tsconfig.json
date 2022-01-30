@@ -1,8 +1,13 @@
 {
-  "include": ["src"],
+  "include": [
+    "src"
+  ],
   "compilerOptions": {
     "target": "ES2020",
-    "lib": ["ES2015", "DOM"],
+    "lib": [
+      "ES2015",
+      "DOM"
+    ],
     "declaration": true,
     "outDir": "dist",
     "module": "commonjs",
@@ -22,6 +27,10 @@
     "noUnusedParameters": false,
     "noUnusedLocals": false,
     "skipLibCheck": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "typeRoots": [
+      "node_modules/@types",
+      "@types"
+    ],
   }
 }
