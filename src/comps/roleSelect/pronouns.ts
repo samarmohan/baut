@@ -22,7 +22,7 @@ export default new Component(
 		const options = interaction.values;
 
 		// Update the roles
-		await multi_select(interaction.member, roles.career, options).catch(
+		await multi_select(interaction.member, roles.pronouns, options).catch(
 			console.error
 		);
 
