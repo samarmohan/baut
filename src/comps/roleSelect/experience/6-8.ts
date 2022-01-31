@@ -16,7 +16,7 @@ export default new Component('6-8', false, async (client, interaction) => {
 	}
 
 	// Check if the user already has the role
-	if (interaction.member.roles.cache.has(roles.experience['3-5'])) {
+	if (interaction.member.roles.cache.has(roles.experience['6-8'])) {
 		// Send the "already has role" message
 		await interaction.editReply({
 			content: 'Your experience is already set to **6 - 8 years**.',
