@@ -1,4 +1,5 @@
 import { Interaction } from 'discord.js';
+import { handleComponentInteractions } from '../../functions/handleComponentInteractions';
 import Event from '../../structures/Event';
 
 export default new Event(
@@ -24,34 +25,7 @@ export default new Event(
 		// 		});
 		// 	}
 		// }
-		// component interactions
-		if (
-			interaction.isMessageComponent() ||
-			interaction.isSelectMenu() ||
-			interaction.isButton()
-		) {
-			// @ts-expect-error yeah
-			const comp = mammot.components.get(interaction.customId);
 
-			// if not in collection return
-			if (!comp) return;
-
-			if (!comp.update) {
-				await interaction.deferReply({ ephemeral: comp.ephermal });
-			} else {
-				await interaction.deferUpdate();
-			}
-
-			try {
-				// execute component logic
-				await comp.run(mammot, interaction);
-			} catch (error) {
-				// respond with error messsage
-				console.log(error);
-				await interaction.editReply({
-					content: `There was an error while executing this component!\n\`\`\`${error}\`\`\``,
-				});
-			}
-		}
+		await handleComponentInteractions(mammot, interaction);
 	}
 );

@@ -1,124 +1,32 @@
-import { GuildMember, WebhookClient, MessageEmbed } from 'discord.js';
+import { GuildMember } from 'discord.js';
 import Event from '../../structures/Event';
-import { channels, roles } from '../../guild';
+import { congratulatorWebhookClient } from '../../webhookClients';
+import { thousandMemberSpecial } from '../../functions/thousandMemberSpecial';
+import { sendUserWelcomeMessage } from '../../functions/sendUserWelcomeMessage';
+import { setRolesOnMemberJoin } from '../../functions/setRolesOnMemberJoin';
+import { memberAddLogging } from '../../functions/memberAddRemoveLogging';
 
 export default new Event(
 	{
 		name: 'guildMemberAdd',
 	},
-	async (mammot, member: GuildMember) => {
+	async (_, member: GuildMember) => {
+		const guild = member.guild;
+		console.log(`[User Add] ${member.user.tag}`);
+
+		// test message
+		congratulatorWebhookClient.send({ content: 'this is a test' });
+
 		// Ignore bots
 		if (member.user.bot) return;
 
-		// 1k member special
-		const thousandthMemberRole = member.guild.roles.cache.get(
-			roles.onethousandthmember
-		);
-		if (
-			member.guild.memberCount === 1000 &&
-			thousandthMemberRole.members.size === 0
-		) {
-			// add role
-			await member.roles.add(thousandthMemberRole);
-
-			// send message
-			const thousandthMemberEmbed = new MessageEmbed()
-				.setTitle(
-					`Congratulations ${member.user.username}! You're our 1000th member!`
-				)
-				.setDescription(
-					`Welcome to Buildergroop! Enjoy your stay here, as well as a very special thousandth member role.`
-				)
-				.setFooter(
-					'Tell all your friends about buildergroop and make them jelly of your exclusive role B)'
-				)
-				.setThumbnail(member.user.displayAvatarURL());
-
-			const thousandthMemberWebhookClient = new WebhookClient({
-				url: process.env.THOUSANDTH_MEMBER_WEBHOOK,
-			});
-			thousandthMemberWebhookClient.send({
-				content: `<@!${member.user.id}>`,
-				embeds: [thousandthMemberEmbed],
-			});
-		}
-
 		try {
-			const embed = new MessageEmbed()
-				.setTitle('Welcome to buildergroop!')
-				.setDescription(
-					`
-          Here are some things you can do:
-
-          **Read the rules over in** <#${channels.rules}>
-          Learn more about buildergroop and view our rules.
-
-          **Introduce yourself in** <#${channels.intros}>
-          Tell the community about yourself! Fun fact, you can run the \`/introduction\` slash command to view how you should structure your intro!     
-
-          **Add what you're building to your nickname**
-          Building a cool project? Make sure to add it to your nickname via the following format: \`[Name] - [Project]\` 
-
-          **Tell your friends!**
-          We're a friendly and welcoming community! Here's our invite link <https://buildergroop.com>.
-          `
-				)
-				.setThumbnail(
-					'https://media.discordapp.net/attachments/924237532919627816/934456702676402186/MOSHED-2022-1-22-9-37-14.gif'
-				)
-				.setFooter(
-					"We hope you enjoy your stay! If you have any questions, don't hesitate to DM an admin."
-				);
-
-			await member.send({
-				embeds: [embed],
-			});
+			await thousandMemberSpecial(member, guild);
+			await sendUserWelcomeMessage(member);
+			await setRolesOnMemberJoin(member);
+			await memberAddLogging(member);
 		} catch (error) {
 			console.log(error);
 		}
-
-		setEligible(member);
-
-		// Handle user eligibility
-		async function setEligible(member: GuildMember) {
-			// Get the roles
-			const memberRole = member.guild.roles.cache.get(roles.member);
-			const notEligibleRole = member.guild.roles.cache.get(
-				roles.not_eligible
-			);
-
-			// Check if the member has the `not_eligible` role already
-			if (member.roles.cache.has(roles.not_eligible)) return;
-
-			await member.roles.add(
-				memberRole,
-				`[User Join] Added Member to ${member.user.tag}`
-			);
-			// Add the not_eligible role
-			await member.roles.add(
-				notEligibleRole,
-				`[User Join] Added Not Eligible to ${member.user.tag}`
-			);
-		}
-		const webhookClient = new WebhookClient({
-			url: process.env.MEMBERS_WEBHOOK,
-		});
-		const embed = new MessageEmbed()
-			.setTitle('Member Joined')
-			.setDescription(
-				`**${member.user.tag}** [<@!${
-					member.user.id
-				}>] joined buildergroop!\n\nTheir account was created on ${member.user.createdAt.toDateString()}.\n\nTheir account ID is ***${
-					member.user.id
-				}.***`
-			);
-
-		webhookClient.send({
-			content: 'User Added',
-			username: 'Member Logs',
-			avatarURL:
-				'https://cdn.discordapp.com/icons/913668807015407646/a_f8271ba713d72cb11a66b4601b1b044e.webp',
-			embeds: [embed],
-		});
 	}
 );
