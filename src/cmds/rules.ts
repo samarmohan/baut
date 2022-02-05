@@ -50,15 +50,20 @@ export class RulesCommand extends Command {
 		// Create the social action row
 		const socialRow = new MessageActionRow().addComponents(
 			new MessageButton()
+				.setLabel('Twitter')
+				.setStyle('LINK')
+				.setURL('https://twitter.com/buildergroop')
+				.setEmoji('🐦'),
+			new MessageButton()
 				.setLabel('GitHub')
 				.setStyle('LINK')
 				.setURL('https://github.com/buildergroop')
 				.setEmoji('👨‍💻'),
 			new MessageButton()
-				.setLabel('Twitter')
+				.setLabel('Linkedin')
 				.setStyle('LINK')
-				.setURL('https://twitter.com/buildergroop')
-				.setEmoji('🐦'),
+				.setURL('https://linkedin.com/company/buildergroop')
+				.setEmoji('💼'),
 			new MessageButton()
 				.setLabel('Website')
 				.setStyle('LINK')

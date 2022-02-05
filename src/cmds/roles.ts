@@ -5,7 +5,7 @@ import {
 	MessageAttachment,
 } from 'discord.js';
 import { config, Command } from '@mammot/core';
-import { channels } from '../guild';
+import { channels, media } from '../guild';
 
 @config('roles', {
 	description: 'Select your self-assigned roles (Admin Only Command)',
@@ -26,9 +26,7 @@ __
 __`;
 
 		// Header image
-		const headerImage = new MessageAttachment(
-			'https://i.imgur.com/pz3OL0L.png	'
-		);
+		const headerImage = new MessageAttachment(media.rolesHeaderImage);
 
 		// Create category buttons
 		const categoryButtons = new MessageActionRow().addComponents(
