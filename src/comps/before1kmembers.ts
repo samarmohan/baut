@@ -9,12 +9,16 @@ export default new Component(
 		if (
 			interaction.guild.memberCount > 1000 ||
 			!(interaction.member.roles instanceof GuildMemberRoleManager)
-		)
+		) {
+			await interaction.editReply(
+				"This role can't be assigned anymore! We've already hit a thousand members!"
+			);
 			return;
+		}
 
 		if (interaction.member.roles.cache.has(roles.before1k)) {
 			await interaction.editReply(
-				'You\'ve already claimed your role, thank you!'
+				"You've already claimed your role, thank you!"
 			);
 			return;
 		}

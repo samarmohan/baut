@@ -23,7 +23,9 @@ export const clientOptions: MammotOptions = {
 	},
 
 	onReady(user) {
-		console.log(`Bot up and running as ${user.username}#${user.discriminator}`);
+		console.log(
+			`Bot up and running as ${user.username}#${user.discriminator}`
+		);
 	},
 
 	presence: {

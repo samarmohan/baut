@@ -44,7 +44,6 @@ export const roles = {
 		'9+': '914061049949458462',
 	},
 
-
 	// Notifications
 	notifications: {
 		event_ping: '929265782226042890',
@@ -55,10 +54,9 @@ export const roles = {
 	},
 	eligible: '913766127451136002',
 	not_eligible: '920144177818390649',
-	before1k: '939146545851412541', // TODO: UPDATE_ME
+	before1k: '939430231993876500',
 	member: '913703107660230656',
 } as const;
-
 
 export const channels = {
 	about: '913669662649237564',

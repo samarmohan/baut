@@ -34,7 +34,7 @@ export default new Event(
 					'https://media.discordapp.net/attachments/924237532919627816/934456702676402186/MOSHED-2022-1-22-9-37-14.gif'
 				)
 				.setFooter(
-					'We hope you enjoy your stay! If you have any questions, don\'t hesitate to DM an admin.'
+					"We hope you enjoy your stay! If you have any questions, don't hesitate to DM an admin."
 				);
 
 			await member.send({
@@ -50,7 +50,9 @@ export default new Event(
 		async function setEligible(member: GuildMember) {
 			// Get the roles
 			const memberRole = member.guild.roles.cache.get(roles.member);
-			const notEligibleRole = member.guild.roles.cache.get(roles.not_eligible);
+			const notEligibleRole = member.guild.roles.cache.get(
+				roles.not_eligible
+			);
 
 			// Check if the member has the `not_eligible` role already
 			if (member.roles.cache.has(roles.not_eligible)) return;
@@ -81,7 +83,8 @@ export default new Event(
 		webhookClient.send({
 			content: 'User Added',
 			username: 'Member Logs',
-			avatarURL: 'https://cdn.discordapp.com/icons/913668807015407646/a_f8271ba713d72cb11a66b4601b1b044e.webp',
+			avatarURL:
+				'https://cdn.discordapp.com/icons/913668807015407646/a_f8271ba713d72cb11a66b4601b1b044e.webp',
 			embeds: [embed],
 		});
 	}
