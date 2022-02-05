@@ -1,6 +1,5 @@
 import { GuildMember } from 'discord.js';
 import Event from '../../structures/Event';
-import { congratulatorWebhookClient } from '../../webhookClients';
 import { thousandMemberSpecial } from '../../functions/thousandMemberSpecial';
 import { sendUserWelcomeMessage } from '../../functions/sendUserWelcomeMessage';
 import { setRolesOnMemberJoin } from '../../functions/setRolesOnMemberJoin';
@@ -13,9 +12,6 @@ export default new Event(
 	async (_, member: GuildMember) => {
 		const guild = member.guild;
 		console.log(`[User Add] ${member.user.tag}`);
-
-		// test message
-		congratulatorWebhookClient.send({ content: 'this is a test' });
 
 		// Ignore bots
 		if (member.user.bot) return;
