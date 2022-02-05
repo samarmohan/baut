@@ -30,7 +30,7 @@ export default new Component(
 			(await interaction.guild.roles.fetch(roles.before1k));
 
 		await interaction.editReply(
-			`You were given the \`${role.name}\` role!`
+			`You were given the \`${role.name}\` role! Make sure to tell all your friends about buildergroop!`
 		);
 	},
 	true
