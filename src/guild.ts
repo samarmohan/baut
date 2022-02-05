@@ -55,6 +55,7 @@ export const roles = {
 	eligible: '913766127451136002',
 	not_eligible: '920144177818390649',
 	before1k: '939430231993876500',
+	onethousandthmember: '939467194276925480', // 939455950920769597
 	member: '913703107660230656',
 } as const;
 
@@ -63,6 +64,7 @@ export const channels = {
 	intros: '913701412578418718',
 	rules: '913669662649237564',
 	roles: '934094517525676042',
+	chat: '913668807015407649', // 913668807015407649
 };
 
 export const embedMessages: EmbedMessages = {
