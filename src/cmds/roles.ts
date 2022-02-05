@@ -27,7 +27,7 @@ __`;
 
 		// Header image
 		const headerImage = new MessageAttachment(
-			'https://cdn.discordapp.com/attachments/864826842707132446/931217059432525894/Roles_Poster.png'
+			'https://i.imgur.com/pz3OL0L.png	'
 		);
 
 		// Create category buttons

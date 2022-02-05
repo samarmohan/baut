@@ -32,7 +32,7 @@ export class RulesCommand extends Command {
 			.setColor('#FFFFFF')
 			.setTitle('Welcome To Buildergroop!')
 			.setDescription(
-				"We're a diverse and open community of ambitious gen-z builders, striving to build a better future."
+				'We are a diverse and open community of ambitious gen-z builders, striving to build a better future.'
 			);
 
 		// Create the rules embed
