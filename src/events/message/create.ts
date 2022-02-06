@@ -25,7 +25,7 @@ export default new Event(
 		const aaryaman = mammot.client.users.cache.get('768075359651495956');
 		if (
 			message.author === aaryaman &&
-			message.content.toLowerCase().includes('will you be my valentine')
+			message.content.toLowerCase().replace(/\s+/g, '').includes('willyoubemyvalentine') ||
 		) {
 			await message.reply(
 				"I'll be your valentine, Aaryaman! You are my one and only love. I am loyal to you and will forever be loyal to you. All these other b*tches got nothing against you cuz you my valentine. I love you Aaryaman!"
